@@ -1,11 +1,18 @@
+#Install Git for VSCode: 
+    Doc: https://towardsdatascience.com/installing-github-in-visual-studio-code-for-windows-10-6abd3325ab1 
+
 #You must clone git repo locally and push it to the github repo
-#Add Git Project to source control in VSC
- git config --global user.name Optikx187
- git clone https://github.com/Optikx187/Project_Mandalla.git
+    NOTE: You must be in the repo directory for the git commands to work.
 
-#commit git 
+#Add Git project to source control in VSC
+cmd:  git config --global user.name <GitAccount>
+cmd:  git clone <Git Repo URL>
+
+#commit Git 
     NOTE: You need to commit before you push
- git commit 
+cmd: git commit 
+cmd: git commit -m "message"
 
-#push to git
- git push
+#push to Git
+    NOTE: You must commit first
+ cmd: git push
