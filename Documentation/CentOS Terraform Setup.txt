@@ -1,0 +1,124 @@
+
+CentOS Terraform Setup
+========================================
+Prereq
+========================================
+    -Download CentOS: 
+        https://www.centos.org/download/
+
+    -Install Linux Distro on Hyper-V
+        -Download ISO and mount
+
+    -Update system
+        cmd: sudo yum update -y
+
+    -Install unzip
+        cmd: sudo yum install unzip -y
+
+    -Install Wget
+        cmd: sudo install wget -y
+
+    -Install nano or vim(test editor)
+        cmd: sudo yum install -y nano 
+        cmd: sudo yum install vim-enhanced -y
+
+    -Install open-ssh
+        Doc: https://phoenixnap.com/kb/how-to-enable-ssh-centos-7
+        sudo yum –y install openssh-server openssh-clients
+
+    -For AWS create credential file:
+        NOTE: It is bad practice to place hardcoded credentials in .tf files
+        cmd: sudo touch ~/.aws/credentials
+        Enter AWS credentials: 
+            cmd: sudo nano ~/.aws/credentials
+            In the file: 
+            [default]
+            aws_access_key_id=<Key>
+            aws_secret_access_key=<secretkey>
+
+    Optional: 
+        -Install hyper-v tools (powershell hyper v integration)
+            cmd: sudo yum install -y hyperv-daemons
+        -Install scoop (powershell customizer)
+            Note: Can be used to install openssh for remoting into Linux VM(very helpful)
+            cmd: Set-ExecutionPolicy RemoteSigned -scope CurrentUser
+            cmd: Invoke-Expression (New-Object System.Net.WebClient).DownloadString('https://get.scoop.sh')
+            
+
+========================================
+Install Terraform
+========================================
+1) Download terraform zip:
+    cmd: sudo wget https://releases.hashicorp.com/terraform/0.12.26/terraform_0.12.26_linux_amd64.zip
+
+2) Install terriform to /usr/local/bin/
+    cmd: sudo unzip ./terraform_0.12.26_linux_amd64.zip -d /usr/local/bin/
+
+3) Test Terraform install
+    terraform -v
+
+4) Review help for the terraform binary
+    cmd: sudo /usr/local/bin/terraform --help
+
+===============================================
+AWS: Create a template script file fo Terraform
+===============================================
+1) Create Terraform Directory
+    cmd: sudo mkdir Terraform
+
+2) Create template file: name terraform.tf
+    cmd: sudo nano terraform.tf
+    configure file with the below one for using default aws stored cred and one with hard coded creds: 
+
+        provider "aws" {
+        region     = "us-east-1"
+        profile    = "default"
+        }
+        resource "aws_instance" "example" {
+        ami = "ami-8803e0f0"
+        instance_type = "t2.micro"
+        }
+        
+        ---or---
+        
+        provider "aws" {
+        region     = "us-east-1"
+        access_key = "AKIAX6WJGCCFFKSU6HJP"
+        secret_key = "fDf6hgOvF07wjavVIAtuEHAvrP+loB97dQtBIv85"
+
+        }
+
+        resource "aws_instance" "example" {
+        ami = "ami-2757f631"
+        instance_type = "t2.micro"
+        }
+
+3) Initialize Terraform
+    cmd: sudo /usr/local/bin/terraform init
+
+4) Plan Teraform build: 
+    NOTE: this will store the plan in memory you can optionally save the plan to an output file with '-out'
+    cmd: sudo /usr/local/bin/terraform plan
+
+5) Apply Terraform build to build resource: 
+    cmd: sudo /usr/local/bin/terraform apply
+
+6) Review ec2 instance and see if server was built
+    NOTE: you can show detailed information with: 
+    cmd: sudo /usr/local/bin/terraform show
+    
+7) To destroy applied instances: 
+    cmd: sudo /usr/local/bin/terraform destroy
+
+========================================
+Helpful Documents
+========================================
+-Install and configure for AWS
+    Doc: https://linoxide.com/linux-how-to/how-to-install-terraform-on-centos-ubuntu/
+    Doc: https://medium.com/slalom-technology/creating-your-first-terraform-infrastructure-on-aws-ad986f952951 
+
+-Terraform Learn For AWS,Azure,Kubernetes
+    Doc: https://learn.hashicorp.com/terraform/getting-started/intro
+
+-Terraform Bootstrapping Azure Linux and windows server
+    Doc: https://medium.com/@gmusumeci/how-to-bootstrapping-azure-vms-with-terraform-c8fdaa457836

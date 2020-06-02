@@ -1,0 +1,123 @@
+CentOS Ansible Setup for Windows Hosts on Hyper-V
+========================================
+Prereq
+========================================
+    -Download CentOS: 
+        https://www.centos.org/download/
+
+    -Install Linux Distro on Hyper-V
+        -Download ISO and mount
+
+    -Update system
+        cmd: sudo yum update -y
+
+    -Install unzip
+        cmd: sudo yum install unzip -y
+
+    -Install Wget
+        cmd: sudo install wget -y
+
+    -Install nano or vim(test editor)
+        cmd: sudo yum install -y nano 
+        cmd: sudo yum install vim-enhanced -y
+
+    -Install open-ssh
+        Doc: https://phoenixnap.com/kb/how-to-enable-ssh-centos-7
+        sudo yum –y install openssh-server openssh-clients
+    
+    Optional: 
+        -Install hyper-v tools (powershell hyper v integration)
+            cmd: sudo yum install -y hyperv-daemons
+        -Install scoop (powershell customizer)
+            Note: Can be used to install openssh for remoting into Linux VM(very helpful)
+            cmd: Set-ExecutionPolicy RemoteSigned -scope CurrentUser
+            cmd: Invoke-Expression (New-Object System.Net.WebClient).DownloadString('https://get.scoop.sh')
+            
+========================================
+Ansible Install on Master Node(CentOS)
+========================================
+1) Install python
+    cmd : sudo dnf install python3
+
+2) Install pip(pythoin package manager)
+    cmd : sudo dnf -y install python3-pip
+    cmd : sudo pip3 install --upgrade pip
+
+3) Add Epel repo 
+        NOTE: The EPEL repository is an additional package repository that provides easy access to install packages for commonly used software
+            cmd : sudo dnf -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
+
+4) Enable EPEL repo and install Ansible 
+    cmd: sudo dnf install  --enablerepo epel-playground  ansible
+
+5) Install pywinrm libraries to connect to windows host winrm
+    cmd: pip install pywinrm
+
+6) Install ansible lint 
+    NOTE: Ansible Lint is a commandline tool for linting playbooks. Use it to detect behaviors and practices that could potentially be improved
+        cmd: pip install ansible-lint
+
+7) Configure hosts file to specify windows credentials
+    example:
+        [srv]
+        192.168.1.123
+
+        [srv:vars]
+        ansible_user=<windows user>
+        ansible_password=<password>
+        ansible_connection=winrm
+        ansible_winrm_server_cert_validation=ignore
+
+8) Test Connection to child Node
+    NOTE: win_ping is specific for windows hosts
+        cmd: ansible all -i /etc/ansible/hosts -m win_ping
+
+========================================
+Ansible Config on Windows Node
+========================================
+1) Run ConfigureRemotingForAnsible.ps1 on windows host to configure ansible for windows
+    Creates: 
+        basic auth support
+        enable ssl listener
+        enables psremoting
+        adds firewall rule to allow winrm https
+
+========================================
+Configure and test playbook
+========================================
+1) Create Projects Directory in Ansible Root
+    cmd: mkdir /etc/ansible/Playbooks
+
+2) Create Playbook
+    cmd: sudo nano testplaybook.yml
+        playbook: 
+        ---
+        - hosts: srv
+
+        tasks:
+
+        - name: Copy File
+
+            win_copy:
+
+            src: C:\temp\Tests.txt
+
+            dest: C:\Users\Administrator\temp\
+
+            remote_src: yes
+            ...
+
+3) Run test playbook
+    NOTE: Ensure the test file exists in src dir on remote host
+    NOTE: 'ansiple-playbook --help' will provide more arguments 
+        cmd: ansible-playbook /etc/ansible/playbooks/testplaybook.yml
+
+========================================
+Helpful Documentation: 
+========================================
+Connecting to windows host
+    https://www.ansible.com/blog/connecting-to-a-windows-host
+Windows playbook example
+    https://geekflare.com/ansible-playbook-windows-example/
+Ansible Fact Cache 
+    https://docs.ansible.com/ansible/latest/plugins/cache.html

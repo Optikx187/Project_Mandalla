@@ -1,0 +1,3 @@
+#Add Git Project to source control in VSC
+ git config --global user.name Optikx187
+ git clone https://github.com/Optikx187/Project_Mandalla.git
