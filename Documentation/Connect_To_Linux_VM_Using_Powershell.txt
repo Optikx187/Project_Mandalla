@@ -1,0 +1,38 @@
+================================================= 
+Connect to Linux box from local Powershell Client   
+=================================================
+
+Use Powershell Direct to remote into hyper-v (Non Linux) VM's
+    Doc: https://www.thomasmaurer.ch/2018/04/hvc-ssh-direct-for-linux-vms-on-hyper-v/
+    Doc: https://patrickwu.space/2019/02/16/hyper-v-hvc-command/
+
+=================================================  
+For Linux Remoting: 
+=================================================   
+
+1) CentOS ssh configuration
+    Doc: https://www.altaro.com/hyper-v/centos-linux-hyper-v/
+    -Install hyperv tools on linux box:       
+        cmd: sudo yum install -y hyperv-daemons
+    -Configure linux box for ssh
+        Doc: https://phoenixnap.com/kb/how-to-enable-ssh-centos-7
+        -Install openssh-server/openssh-client
+            cmd: sudo yum –y install openssh-server openssh-clients
+        NOTE: Below are ssh commands to control the service:
+            -start ssh client:              cmd: sudo systemctl start sshd
+            -check ssh client status:       cmd: sudo systemctl status sshd
+            -stop ssh client:               cmd: sudo systemctl stop sshd
+            -start after reboot:            cmd: sudo systemctl enable sshd
+                NOTE: Setting the service to start after reboot is necessary!
+            -disable after every reboot:    cmd: sudo systemctl disable sshd 
+            NOTE: To modify security: sudo vim /etc/ssh/sshd_config and change port and disable root user log on
+
+2) Powershell Command Line configuration
+    -Install SSH and Sudo for your powershell cmdline with Scoop:
+        NOTE: Scoop is a powershell cmd line customizer
+        Doc: https://scoop.sh/
+        -Initial install:                                cmd: Invoke-Expression (New-Object System.Net.WebClient).DownloadString('https://get.scoop.sh')
+        -Powershell scoop ssh install:                   cmd: scoop install ssh
+        -Powershell scoop sudo install:                  cmd: scoop install sudo
+        -Powershell connection string to ssh into host:  cmd: sudo hvc ssh userx@VMNAME 
+        NOTE: Sudo allows your command to be run with elivated permissions
