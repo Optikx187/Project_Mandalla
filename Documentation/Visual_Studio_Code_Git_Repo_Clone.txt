@@ -1,3 +1,11 @@
+#You must clone git repo locally and push it to the github repo
 #Add Git Project to source control in VSC
  git config --global user.name Optikx187
  git clone https://github.com/Optikx187/Project_Mandalla.git
+
+#commit git 
+    NOTE: You need to commit before you push
+ git commit 
+
+#push to git
+ git push

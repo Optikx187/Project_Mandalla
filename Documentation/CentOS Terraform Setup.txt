@@ -83,8 +83,8 @@ AWS: Create a template script file fo Terraform
         
         provider "aws" {
         region     = "us-east-1"
-        access_key = "AKIAX6WJGCCFFKSU6HJP"
-        secret_key = "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"
+        access_key = "***"
+        secret_key = "***"
 
         }
 
