@@ -110,6 +110,13 @@ AWS: Create a template script file fo Terraform
 7) To destroy applied instances: 
     cmd: sudo /usr/local/bin/terraform destroy
 
+8) Add alias for terraform: 
+    NOTE: Prevent typing full path to run terraform
+    cmd: sudo nano  ~/.profile
+    add line: alias terraform=/usr/local/bin/terraform
+    source profile: cmd: sudo . ~/.profile
+
+
 ========================================
 Helpful Documents
 ========================================
