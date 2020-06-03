@@ -12,28 +12,10 @@ Other Methods can be found in the terraform documentation here
 ======================================================
 Configure Service Principle in AD( Using Azure Portal)
 ======================================================
+    1) Create Az AD Domain
+        -Log into portal and select Azure Active Directory
 
-Configure Service principal on Azure through the Azure Portal
-    
-    ***
-        -Create AZ Domain User: 
-            - Automation@<account>.onmicrosoft.com
-        ***Account:  Automation@optikx187outlook.onmicrosoft.com
-        ***Pass:  !!
-        -Assign AZ Domain User the role of User Administrator. Done by Admin
-            -verified in user(Atomation@...'s AZ AD > User Setting field)
-        -Change user role permissions: 
-        Doc: https://docs.microsoft.com/en-us/azure/active-directory/develop/howto-create-service-principal-portal#required-permissions
-            -Configure Key Vault
-        -Add Access policy
-        -Add key, secret, and certificate permissions you want to grant your application. Select the service principal you created previously
-    ***
-
-    -Create Az AD Domain
-     -Select Azure Active Directory
-     -more!
-
-    -Configure Registration in AZ AD 
+    2)Configure App Registration in AZ AD 
         Doc: https://www.terraform.io/docs/providers/azurerm/guides/service_principal_client_secret.html
         -Navigate to the Azure Active Directory overview within the Azure Portal 
         -Then select the App Registration blade
@@ -43,11 +25,11 @@ Configure Service principal on Azure through the Azure Portal
             -Supported Account Types: Accounts in this organization only
             -Redirect URI = (blank)
         -Record the Application ID(client_id) and the Directory ID(tenant_id)
-            -client_id = 67998207-e1b5-47b0-8d48-f4589cd775f9
-            -tenant_id = 99bdbdda-ec0b-4d3a-9840-2df5f2a0e7af
+            -client_id = xxx
+            -tenant_id = xxxx
         doc: https://docs.microsoft.com/en-us/azure/active-directory/develop/howto-create-service-principal-portal 
 
-    -Generate Client Secret for AZ AD App
+    3)Generate Client Secret for AZ AD App
         NOTE: This will be used for authentication
         -On the App Registration page select 'New Client Secret'
         -Select 'New Client Secret', Provide a discription and hit 'add'
@@ -56,7 +38,7 @@ Configure Service principal on Azure through the Azure Portal
         NOTE: This string will only display once so record it!
         NOTE: This can be configured to expire
 
-    -Grant application access to manage resources in AZ Subscriptions
+    4)Grant application access to manage resources in AZ Subscriptions
         -Navigate to subscription blade in AZ portal
         -Select Sub you want to use
         -Select Access Control > Add > Add role assignment
@@ -65,9 +47,10 @@ Configure Service principal on Azure through the Azure Portal
         -Add created service principal by searching for the one created earlier, 'Terraform'
         -Select Save
 
+======================================================
 Configure Terraform on CentOS: 
-
-    -Set up environment Vars so TF knows about connection strings: 
+======================================================
+    1)Set up .tf files to create azure resource 
         example:
             export ARM_CLIENT_ID="00000000-0000-0000-0000-000000000000"
             export ARM_CLIENT_SECRET="00000000-0000-0000-0000-000000000000"
@@ -82,24 +65,77 @@ Configure Terraform on CentOS:
             provider "azurerm" {
             # Whilst version is optional, we /strongly recommend/ using it to pin the version of the Provider being used      
             version = "=2.5.0"
-            client_id       ="98207-e1b5-47b0-8d48-f4589cd775f9"
-            client_secret   ="xxxdhp87~8pG6-oDxGUt1~dRcV~R.QSfw9"
-            subscription_id ="129fd1cf-e2c2-4510-9462-311f41bac3cd"
-            tenant_id       ="99bdbdda-ec0b-4d3a-9840-2df5f2a0e7af"
+            client_id       ="***"
+            client_secret   ="***"
+            subscription_id ="***"
+            tenant_id       ="***"
             features {}
             }
 
+    2)To seperate variables you can spread out terraform files:
+        Files and thier contents: 
+            -main.tf: 
+                provider "azurerm" {
+                # Whilst version is optional, we /strongly recommend/ using it to pin the version of the Provider being used      
+                version = "=2.5.0"
 
-    -Create /etc/scripts/Terraform_Script/test.tf file with commnad below
-        contents: 
+                client_id       =var.client_id
+                client_secret   =var.client_secret
+                subscription_id =var.subscription_id
+                tenant_id       =var.tenant_id
+
+                features {}
+                }
+
+                resource "azurerm_resource_group" "rg" {
+                name     = var.resourcegroup
+                location = var.location
+                }
+
+            -providervars.tf: 
+
+                variable "client_id"{
+                        type = string
+                        description = "Azure client ID"
+                }
+                variable "client_secret"{
+                        type = string
+                        description = "Azure client secret"
+                }
+                variable "subscription_id" {
+                        type = string
+                        description = "Azure subscription  ID"
+                }
+                variable "tenant_id"{
+                        type = string
+                        description = "Azure subscription  ID"
+                }
+
+            -variables.tf
+
+                variable "location" {
+                default = "eastus"
+                }
+                variable "resourcegroup" {
+                default = "TerriformTest"
+                }
+
+            -terraform.tfvars:
+
+                client_id       ="xxx"
+                client_secret   ="xxx"
+                subscription_id ="xxx"
+                tenant_id       ="xxx"
+
+    3)Test terraform build
+        From Scripts dir: /etc/scripts/Terraform_Scripts/Azure
+        sudo /usr/local/bin/terraform init 
+        sudo /usr/local/bin/terraform plan 
+        sudo /usr/local/bin/terraform apply
+======================================================
+Helpful Docs:
+======================================================
+Bootstrapping Azure Resources(variable file defs)
+    https://medium.com/@gmusumeci/how-to-bootstrapping-azure-vms-with-terraform-c8fdaa457836 
 
 
-    -Test terraform build
-        From Scripts dir: /etc/scripts/Terraform_Scripts
-        sudo /usr/local/bin/terraform init >plan > apply
-
-
-
-
-
-    -
