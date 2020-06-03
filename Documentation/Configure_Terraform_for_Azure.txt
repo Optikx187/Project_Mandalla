@@ -1,3 +1,6 @@
+Configure Terraform to make Azure Resource Group 
+
+This doc covers the creation of a basic resource group in azure using terraform
 ==========================
 Prereq
 ==========================
@@ -135,7 +138,10 @@ Configure Terraform on CentOS:
 ======================================================
 Helpful Docs:
 ======================================================
+Build LinuxVM in Azure
+    https://docs.microsoft.com/en-us/azure/developer/terraform/create-linux-virtual-machine-with-infrastructure
 Bootstrapping Azure Resources(variable file defs)
     https://medium.com/@gmusumeci/how-to-bootstrapping-azure-vms-with-terraform-c8fdaa457836 
+
 
 
