@@ -82,7 +82,7 @@ Configure Terraform on CentOS:
             provider "azurerm" {
             # Whilst version is optional, we /strongly recommend/ using it to pin the version of the Provider being used      
             version = "=2.5.0"
-            client_id       ="67998207-e1b5-47b0-8d48-f4589cd775f9"
+            client_id       ="98207-e1b5-47b0-8d48-f4589cd775f9"
             client_secret   ="xxxdhp87~8pG6-oDxGUt1~dRcV~R.QSfw9"
             subscription_id ="129fd1cf-e2c2-4510-9462-311f41bac3cd"
             tenant_id       ="99bdbdda-ec0b-4d3a-9840-2df5f2a0e7af"
