@@ -144,7 +144,7 @@ resource "azurerm_linux_virtual_machine" "network-lnx-vm" {
     #os_profile {
         computer_name  = var.compname
         admin_username = "optikx"
-        admin_password = "P@ssword187!@#$%"
+        admin_password = "****"
     #}
     source_image_reference {
          publisher = "Canonical"
