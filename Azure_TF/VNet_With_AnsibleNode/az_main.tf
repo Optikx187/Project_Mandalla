@@ -157,7 +157,7 @@ resource "azurerm_linux_virtual_machine" "network-lnx-vm" {
 #bootstrap linux host to install updates and ansible
 resource "azurerm_virtual_machine_extension" "network-lnx-vmext" {
     name                  = "${var.vmname}-vmext"
-    virtual_machine_id    =  azurerm_linux_virtual_machine.network-lnx-vm.id
+    virtual_machine_id    = azurerm_linux_virtual_machine.network-lnx-vm.id
     publisher             = "Microsoft.Azure.Extensions"
     type                  = "CustomScript"
     type_handler_version  = "2.0"
