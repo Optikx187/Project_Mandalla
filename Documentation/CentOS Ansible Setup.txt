@@ -1,4 +1,4 @@
-CentOS Ansible Setup for Windows Hosts on Hyper-V
+CentOS Ansible Install and Setup to configure a Windows Hosts on Hyper-V 
 ========================================
 Prereq
 ========================================
@@ -14,14 +14,13 @@ Prereq
     -Install unzip
         cmd: sudo yum install unzip -y
 
-    -Install Wget
+    -Install Wget(retrieve content from web servers)
         cmd: sudo install wget -y
 
-    -Install nano or vim(test editor)
+    -Install nano(text editor)
         cmd: sudo yum install -y nano 
-        cmd: sudo yum install vim-enhanced -y
 
-    -Install open-ssh
+    -Install open-ssh(unless using OS on cloud provider)
         Doc: https://phoenixnap.com/kb/how-to-enable-ssh-centos-7
         sudo yum –y install openssh-server openssh-clients
     
@@ -37,9 +36,10 @@ Prereq
 Ansible Install on Master Node(CentOS)
 ========================================
 1) Install python
+    NOTE: 'DNF' stands for dandified yum, package manager for RPM based linux distros
     cmd : sudo dnf install python3
 
-2) Install pip(pythoin package manager)
+2) Install pip(python package manager)
     cmd : sudo dnf -y install python3-pip
     cmd : sudo pip3 install --upgrade pip
 
