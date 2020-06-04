@@ -3,7 +3,7 @@ CentOS Terraform Setup
 ========================================
 Prereq
 ========================================
-    -Download CentOS: 
+     - Download CentOS: 
         https://www.centos.org/download/
 
     -Install Linux Distro on Hyper-V
@@ -15,12 +15,11 @@ Prereq
     -Install unzip
         cmd: sudo yum install unzip -y
 
-    -Install Wget
+    -Install Wget(retrieve content from web servers)
         cmd: sudo install wget -y
 
-    -Install nano or vim(test editor)
+    -Install nano(text editor)
         cmd: sudo yum install -y nano 
-        cmd: sudo yum install vim-enhanced -y
 
     -Install open-ssh
         Doc: https://phoenixnap.com/kb/how-to-enable-ssh-centos-7
