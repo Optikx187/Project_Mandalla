@@ -37,27 +37,28 @@ Ansible Install on Master Node(CentOS)
 ========================================
 1) Install python
     NOTE: 'DNF' stands for dandified yum, package manager for RPM based linux distros
-    cmd : sudo dnf install python3
+    cmd : sudo yum -y install python3
 
 2) Install pip(python package manager)
-    cmd : sudo dnf -y install python3-pip
-    cmd : sudo pip3 install --upgrade pip
+    cmd : sudo yum -y install python3-pip
 
 3) Add Epel repo 
         NOTE: The EPEL repository is an additional package repository that provides easy access to install packages for commonly used software
-            cmd : sudo dnf -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
+            cmd : sudo yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
+            cmd : sudo yum -y install epel-release
 
 4) Enable EPEL repo and install Ansible 
     cmd: sudo dnf install  --enablerepo epel-playground  ansible
 
 5) Install pywinrm libraries to connect to windows host winrm
-    cmd: pip install pywinrm
+    cmd: sudo yup install python-winrm
 
 6) Install ansible lint 
     NOTE: Ansible Lint is a commandline tool for linting playbooks. Use it to detect behaviors and practices that could potentially be improved
         cmd: pip install ansible-lint
 
 7) Configure hosts file to specify windows credentials
+    NOTE: Hosts file can be pointed to with the '-i' param
     example:
         [srv]
         192.168.1.123

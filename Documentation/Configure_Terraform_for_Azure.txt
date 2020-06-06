@@ -142,6 +142,7 @@ Build LinuxVM in Azure
     https://docs.microsoft.com/en-us/azure/developer/terraform/create-linux-virtual-machine-with-infrastructure
 Bootstrapping Azure Resources(variable file defs)
     https://medium.com/@gmusumeci/how-to-bootstrapping-azure-vms-with-terraform-c8fdaa457836 
-
+Advanced infrustructure: 
+    https://docs.microsoft.com/en-us/azure/developer/terraform/create-vm-cluster-with-infrastructure 
 
 
