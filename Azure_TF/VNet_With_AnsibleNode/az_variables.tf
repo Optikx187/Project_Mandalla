@@ -12,7 +12,6 @@ variable "environment" {
   default = "TST"
 }
 variable "account_replication_type"{
-
   default = "LRS"
 }
 variable "account_tier"{
@@ -24,15 +23,26 @@ variable "vmname"{
 variable "compname"{
   default = "TFTest"
 }
+variable "vm-size"{
+  default = "Standard_DS1_v2" 
+}
 ############ENDAzInfo############
 ############Networking############
 #vnet
-variable "network-vnet-cidr0"{
+variable "az-net-vnet0-cidr0"{
   default = "10.0.0.0/16"
   }
 #subnet
-variable "network-subnet-cidr0"{
+variable "az-net-subnet0-cidr0"{
   default = "10.0.1.0/24"
+}
+variable "ip-allocation"{
+  default = "Static"
+  #dynamic
+}
+variable "net-interface-count"{
+  default = "2"
+  #dynamic
 }
 ############ENDNetworking############
 ############Connection Vars############
@@ -61,6 +71,9 @@ variable "password"{
 ############Az LNX bootstrap############
 variable "scfile"{
   default  = "/scripts/Bootstrap_Scripts/ansible_lnx_bootstrap.sh"
+}
+variable "pwshscript"{
+  default  = "/scripts/Bootstrap_Scripts/ansible_win_bootstrap.ps1"
 }
 ############ENDAz LNX bootstrap############
 
