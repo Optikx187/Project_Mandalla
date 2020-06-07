@@ -44,6 +44,10 @@ variable "net-interface-count"{
   default = "2"
   #dynamic
 }
+variable "source_address"{
+  default = "74.98.165.79"
+  #dynamic
+}
 ############ENDNetworking############
 ############Connection Vars############
 #stored in terraform.tfvars

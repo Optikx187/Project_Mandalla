@@ -37,7 +37,7 @@ Configure Service Principle in AD( Using Azure Portal)
         -On the App Registration page select 'New Client Secret'
         -Select 'New Client Secret', Provide a discription and hit 'add'
         -Record the secret value: 
-            client_secret = qg2dhp87~8pG6-oDxGUt1~dRcV~R.QSfw9
+            client_secret = XXXX
         NOTE: This string will only display once so record it!
         NOTE: This can be configured to expire
 
