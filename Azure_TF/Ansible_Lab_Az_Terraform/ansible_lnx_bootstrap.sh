@@ -9,5 +9,4 @@ yum -y install python3-pip
 yum -y install epel-release
 yum -y install ansible
 yum -y install python-winrm
-#yum -y install pywinrm
-#yum -y install ansible-lint
+
