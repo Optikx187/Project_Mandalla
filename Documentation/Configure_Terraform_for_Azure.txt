@@ -35,13 +35,22 @@ Configure Service Principle in AD( Using Azure Portal)
     3)Generate Client Secret for AZ AD App
         NOTE: This will be used for authentication
         -On the App Registration page select 'New Client Secret'
+        -Enter a name for the secret.
+        -Navigate to certificates and secrets in the left blade
         -Select 'New Client Secret', Provide a discription and hit 'add'
         -Record the secret value: 
-            client_secret = XXXX
+            client_secret = xxxx
         NOTE: This string will only display once so record it!
         NOTE: This can be configured to expire
 
-    4)Grant application access to manage resources in AZ Subscriptions
+    4) Find subscription id: 
+        -Log onto Microsoft Azure
+        -Click Settings (You can find settings on the bottom left of the page)
+        -Your Azure Subscription ID should be displayed on the settings 
+        -Record Value
+            subcription_id = xxxx
+
+    5)Grant application access to manage resources in AZ Subscriptions
         -Navigate to subscription blade in AZ portal
         -Select Sub you want to use
         -Select Access Control > Add > Add role assignment
