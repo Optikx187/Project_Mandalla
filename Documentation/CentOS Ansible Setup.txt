@@ -47,21 +47,21 @@ Ansible Install on Master Node(CentOS)
             cmd : sudo yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
             cmd : sudo yum -y install epel-release
 
-4) Enable EPEL repo and install Ansible 
-    cmd: sudo dnf install  --enablerepo epel-playground  ansible
+4) Install Ansible 
+    cmd: sudo yum install ansible
 
-5) Install pywinrm libraries to connect to windows host winrm
-    cmd: sudo yup install python-winrm
+5) Install python winrm libraries to connect to windows hosts
+    NOTE: Requires 1 additional powershell script to be run on the windows host to configure
+    cmd: sudo yum install python-winrm
 
-6) Install ansible lint 
-    NOTE: Ansible Lint is a commandline tool for linting playbooks. Use it to detect behaviors and practices that could potentially be improved
-        cmd: pip install ansible-lint
+Windows connection Test
 
-7) Configure hosts file to specify windows credentials
-    NOTE: Hosts file can be pointed to with the '-i' param
-    example:
+    1) Configure hosts file to specify windows credentials
+        NOTE: Hosts file can be pointed to with the '-i' param
+        example:
+
         [srv]
-        192.168.1.123
+        192.168.1.xxx
 
         [srv:vars]
         ansible_user=<windows user>
@@ -69,9 +69,37 @@ Ansible Install on Master Node(CentOS)
         ansible_connection=winrm
         ansible_winrm_server_cert_validation=ignore
 
-8) Test Connection to child Node
-    NOTE: win_ping is specific for windows hosts
-        cmd: ansible all -i /etc/ansible/hosts -m win_ping
+    2)  Test Connection to node 
+        NOTE: win_ping is specific for windows hosts
+        cmd: ansible all -i /etc/ansible/hosts_win -m win_ping
+
+Linux connection test
+
+    1) Configure hosts file to specify windows credentials
+        NOTE: Hosts file can be pointed to with the '-i' param
+        example:
+
+        [srv]
+        192.168.1.xxx
+
+        [srv:vars]
+        ansible_user=<windows user>
+        ansible_password=<password>
+        ansible_connection=ssh
+
+    2) Add the line to the ansible.cfg
+       NOTE: This enables username and pass auth with ssh connection to remote hosts
+       Add line under [defaults] block: 
+
+        host_key_checking = false
+     
+     NOTE: This can also be a environment variable:
+        export ANSIBLE_HOST_KEY_CHECKING=False
+    
+    3) Test Connection to linux host: 
+        cmd: ansible all -i /etc/ansible/hosts_lin -m ping
+   
+
 
 ========================================
 Ansible Config on Windows Node
@@ -86,32 +114,86 @@ Ansible Config on Windows Node
 ========================================
 Configure and test playbook
 ========================================
-1) Create Projects Directory in Ansible Root
-    cmd: mkdir /etc/ansible/Playbooks
+windows Playbook
+    1) Create Projects Directory in Ansible root
+        cmd: mkdir /etc/ansible/Playbooks
 
-2) Create Playbook
-    cmd: sudo nano testplaybook.yml
-        playbook: 
-        ---
-        - hosts: srv
+    2) Create Playbook
+        cmd: sudo nano testplaybook.yml
+            playbook: 
+            ---
+            - hosts: srv
 
-        tasks:
+            tasks:
 
-        - name: Copy File
+            - name: Copy File
 
-            win_copy:
+                win_copy:
 
-            src: C:\temp\Tests.txt
+                src: C:\temp\Tests.txt
 
-            dest: C:\Users\Administrator\temp\
+                dest: C:\Users\Administrator\temp\
 
-            remote_src: yes
+                remote_src: yes
             ...
 
-3) Run test playbook
-    NOTE: Ensure the test file exists in src dir on remote host
-    NOTE: 'ansiple-playbook --help' will provide more arguments 
-        cmd: ansible-playbook /etc/ansible/playbooks/testplaybook.yml
+    3) Run test playbook
+        NOTE: Ensure the test file exists in src dir on remote host
+        NOTE: 'ansiple-playbook --help' will provide more arguments 
+            cmd: ansible-playbook /etc/ansible/playbooks/testplaybook.yml
+
+Linux Playbooks
+    1) If not already created, make a Projects directory in Ansible root
+        cmd: mkdir /etc/ansible/Playbooks
+    
+    2) Create Playbook: 
+        example: 
+            
+
+    3) To specify sudo password: 
+        a) ansible-playbook <playbook.yml> -K 
+        b) ansible-playbook -i hostlin /etc/ansible/Playbooks/lintest.yml --extra-vars 'ansible_become_pass=passhere'
+        
+        Ansible vault method:
+        a) update inventory/hosts file to look like below:
+        NOTE: pay attention to the defined variable on thelast line
+            [lnxsrv]
+            10.0.1.xxx
+
+            [lnxsrv:vars]
+            ansible_user=xxxx
+            ansible_password=xxxx
+            ansible_connection=ssh
+            #for vault pass 
+            ansible_become=yes  # use sudo 
+            ansible_become_method=sudo 
+            ansible_become_pass='{{ my_pass }}'
+
+        b) create secret/password vault file:
+            NOTE: This file will remain encrypted.  
+                cmd: sudo ansible-vault create passwd.yml
+            NOTE: To edit secret
+                cmd: ansible-vault edit passwd.yml
+            -Enter password, you will need this to read form the file
+        c) add password to file: 
+            ex) my_pass: mysudopassword
+
+        d) create vault password file
+            create vault.txt
+                cmd: nano vault.txt
+            -add password for the secret file as one line as a string
+            -save file
+
+        e) Run playbook using password file  
+          cmd: ansible-playbook -i hostlin /etc/ansible/Playbooks/lintest.yml --vault-password-file=./vault.txt --extra-vars '@passwd.yml'
+        f) Run playbook without password file(skipping step d above)
+          cmd: ansible-playbook -i hostlin /etc/ansible/Playbooks/lintest.yml --ask-vault-pass --extra-vars '@passwd.yml'
+
+        Linux Enable playbooks without specifying sudo pass
+            requires sudo user
+            requires sudoers file manipulation
+            doc: https://www.cyberciti.biz/faq/how-to-set-and-use-sudo-password-for-ansible-vault/
+            doc: https://phoenixnap.com/kb/how-to-create-add-sudo-user-centos#:~:text=%20How%20to%20Add%20Users,User%20to%20Group%20More 
 
 ========================================
 Helpful Documentation: 
@@ -122,3 +204,8 @@ Windows playbook example
     https://geekflare.com/ansible-playbook-windows-example/
 Ansible Fact Cache 
     https://docs.ansible.com/ansible/latest/plugins/cache.html
+Basic Linux Playbook examples
+    https://techexpert.tips/ansible/ansible-playbook-examples-ubuntu-linux/
+    https://networknuts.net/basic-ansible-playbooks/ 
+Linux Sudoers Addition for passwordless playbooks
+https://phoenixnap.com/kb/how-to-create-add-sudo-user-centos#:~:text=%20How%20to%20Add%20Users,User%20to%20Group%20More
