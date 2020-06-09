@@ -40,10 +40,6 @@ variable "ip-allocation"{
   default = "Static"
   #dynamic
 }
-variable "net-interface-count"{
-  default = "2"
-  #dynamic
-}
 variable "source_address"{
   default = "74.98.165.79"
   #dynamic
@@ -80,20 +76,22 @@ variable "password"{
   description = "Azure OS credential: Password"
 }
 ############ENDAz OS credential vars############
-############Az LNX bootstrap############
-variable "scfile"{
+############Az bootstrap vars############
+variable "bashfile"{
   default  = "./ansible_lnx_bootstrap.sh"
 }
 variable "pwsfile"{
   default  = "./ConfigureRemotingForAnsible.ps1"
 }
-#Null resource to make the VM intermediate varable - probably not the right way to do this
+############END Az bootstrap vars############
+############Additional vars############
 resource "null_resource" "intermediates" {
     triggers = {
         full_vm_dns_name = "${var.vmname}.${var.location}.${var.azure_dns_suffix}"
     }
 }
 #first step is to create random text for unique names 
+#delete if no errors witout storage account
 resource "random_id" "randomId" {
     keepers = {
         # Generate a new ID only when a new resource group is defined
@@ -118,12 +116,5 @@ resource "random_string" "random-win-vm" {
   upper   = false
   number  = true
 }
-
-############ENDAz LNX bootstrap############
-# Create (and display) an SSH key
-#resource "tls_private_key" "ssh_key" {
-#  algorithm = "RSA"
-#  rsa_bits = 4096
-#}
-#output "tls_private_key" { value = "${tls_private_key.ssh_key.private_key_pem}" }
+############Additional vars############
 
