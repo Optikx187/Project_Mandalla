@@ -1,0 +1,6 @@
+---
+    - hosts: winsrv
+      tasks:
+        - name: Test Powershell Script
+          script: /etc/ansible/Playbooks/Scripts/test.ps1
+...

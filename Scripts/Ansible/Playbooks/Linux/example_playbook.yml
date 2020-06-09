@@ -1,0 +1,9 @@
+---
+    - hosts: all
+      become: yes
+      tasks:
+      - name: Echo the path to a tmp file
+        shell: echo $PATH > /tmp/thing1.txt
+      - name: Echo String to a tmp file
+        shell: echo  "This is a test" > /tmp/thing2.txt
+...

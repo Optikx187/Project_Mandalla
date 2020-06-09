@@ -1,0 +1,11 @@
+[lnxsrv]
+10.0.1.xxx
+
+[lnxsrv:vars]
+ansible_user=xxxx
+ansible_password=xxxx
+ansible_connection=ssh
+#for vault pass 
+#ansible_become=yes  # use sudo 
+#ansible_become_method=sudo 
+#ansible_become_pass='{{ my_pass }}'
