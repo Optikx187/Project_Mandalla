@@ -1,37 +1,30 @@
-## Welcome to GitHub Pages
+## Project Mandalla
 
-You can use the [editor on GitHub](https://github.com/Optikx187/Project_Mandalla/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
+Welcome, 
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+This project is mainly a hodgepodge of terraform code, powershell, and bash scripts to provide infrustructure for various testing labs.
 
-### Markdown
+Currently I'm working on is providing a terraform solution to create an Ansible lab containing a centOS 7.5 control node with a windows server and centOS child node. The infrustructure takes about 15 min to spin up from start to finish. 
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+### Prereqs before you begin
 
-```markdown
-Syntax highlighted code block
+1)You need Terraform installed or you can use Azure CLI
+2)You will need a dedicated folder to store the terraform code
+3)You will need to find your connection variables for your cloud service provider
+  -Documentation for Azure connection strings can be found at: _Project_Mandalla/Documentation/Configure_Terraform_for_Azure.txt_ 
+Note: 
+ My local test lab is centOS 8 so many of these examples will use linux commands and syntax
 
-# Header 1
-## Header 2
-### Header 3
+### Get started with IaC Ansible Lab 
 
-- Bulleted
-- List
+Azure: 
+1) Download the terraform code into a local directory.
+   Code: https://github.com/Optikx187/Project_Mandalla/tree/master/Azure_TF/Ansible_Lab_Az_Terraform
+2) Edit _az.provider.tf_ and set up connection string for your provider block
+  Documentation for this is laid out here: _Project_Mandalla/Documentation/Configure_Terraform_for_Azure.txt_ 
+3) Run terraform init
+4) Run terraform plan 
+5) Run terraform apply
+6) Thats it!
 
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
-```
-
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/Optikx187/Project_Mandalla/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+### Stay tuned. There will be much more to come. 
