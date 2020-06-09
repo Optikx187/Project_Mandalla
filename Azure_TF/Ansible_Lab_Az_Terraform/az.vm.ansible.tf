@@ -50,4 +50,3 @@ resource "azurerm_virtual_machine_extension" "lnx-vm0bootloader" {
     }
     PROT
 }
-#
