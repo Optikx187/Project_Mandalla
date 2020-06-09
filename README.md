@@ -42,7 +42,3 @@ Detailed instructions can be found here: https://github.com/Optikx187/Project_Ma
 
 
 ### Stay tuned. There will be much more to come. 
-<<<<<<< HEAD
-
-=======
->>>>>>> 966a705359442a276b4578b0c5b6476cec53b69e
