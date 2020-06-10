@@ -42,5 +42,5 @@ Once the terraform apply is done, you will need to configure your inventory file
 Detailed instructions can be found here: https://github.com/Optikx187/Project_Mandalla/tree/master/Documentation
 
 
-### Stay tuned. There will be much more to come. 
+### Stay tuned. There will be much more to come.  
 
