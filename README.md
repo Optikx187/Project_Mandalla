@@ -1,5 +1,4 @@
-# Project_Mandalla
-## Project Mandalla
+## Project_Mandalla
 
 Welcome, 
 
