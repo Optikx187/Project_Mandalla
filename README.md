@@ -1,5 +1,3 @@
-# Project_Mandalla
-
 Welcome, 
 
 This project is mainly a hodgepodge of terraform code, powershell, and bash scripts to provide infrustructure for various solutions. This project is my documented journey down the path of learning immutable infrustructure and configuration management. Currently I'm working on is providing a terraform solution to create an Ansible lab containing a centOS 7.5 control node with a windows server and centOS child node. The infrustructure takes about 15 min to spin up from start to finish. 
