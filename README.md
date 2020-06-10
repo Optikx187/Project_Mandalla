@@ -27,14 +27,15 @@ Azure:
    Code: https://github.com/Optikx187/Project_Mandalla/tree/master/Azure_TF/Ansible_Lab_Az_Terraform
 2) Edit _az.provider.tf_ and set up connection string for your provider block
   Documentation for this is laid out here: _Project_Mandalla/Documentation/Configure_Terraform_for_Azure.txt_ 
-3) Run 'terraform init'
-4) Run 'terraform plan'
-5) Run 'terraform apply'
+3) `Run 'terraform init'`
+4) `Run 'terraform plan'`
+5) Run `'terraform apply'`
 6) Thats it your ansible infrustructure is built in Azure. 
+7) To destroy the infrustructure use the command `terraform destroy`
 
 The Terraform code covers:
 -Bootstrapping the ansible node to install ansible as well as some helpful tools that you might need.
--Bootstrapping the windows server to run 'ConfigureRemotingForAnsible.ps1' to allow winrm connectivity to your windows server from your ansible node.
+-Bootstrapping the windows server to run `ConfigureRemotingForAnsible.ps1` to allow winrm connectivity to your windows server from your ansible node.
 
 ### Get started with Ansible:
 Once the terraform apply is done, you will need to configure your inventory file on your Ansible control node to run some test playbooks. 
