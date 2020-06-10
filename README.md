@@ -1,3 +1,8 @@
+# ProjectMandalla
+
+
+ 
+## Get started with IaC Ansible Lab 
 Welcome, 
 
 This project is mainly a hodgepodge of terraform code, powershell, and bash scripts to provide infrustructure for various solutions. This project is my documented journey down the path of learning immutable infrustructure and configuration management. Currently I'm working on is providing a terraform solution to create an Ansible lab containing a centOS 7.5 control node with a windows server and centOS child node. The infrustructure takes about 15 min to spin up from start to finish. 
@@ -11,8 +16,8 @@ Prereqs before you begin
 3.You will need to find your connection variables for your cloud service provider
   -Documentation for Azure connection strings can be found at:
   https://github.com/Optikx187/Project_Mandalla/tree/master/Documentation/Configure_Terraform_for_Azure.txt
- 
-## Get started with IaC Ansible Lab 
+
+
 Note: My local test lab is centOS 8 so many of the examples in the documetation will use linux commands and syntax
 
 Software versions:
