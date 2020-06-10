@@ -1,4 +1,4 @@
-## Project_Mandalla
+# Project_Mandalla
 
 Welcome, 
 
@@ -6,7 +6,7 @@ This project is mainly a hodgepodge of terraform code, powershell, and bash scri
 
 For now, all documentation is for CentOS and the Azure terraform provider, but AWS is on the list of future projects.
 
-### Prereqs before you begin
+## Prereqs before you begin
 
 1)You need Terraform installed or you can use Azure CLI
 2)You will need a dedicated folder to store the terraform code
@@ -14,8 +14,8 @@ For now, all documentation is for CentOS and the Azure terraform provider, but A
   -Documentation for Azure connection strings can be found at:
   https://github.com/Optikx187/Project_Mandalla/tree/master/Documentation/Configure_Terraform_for_Azure.txt
  
-### Get started with IaC Ansible Lab 
-_Note: My local test lab is centOS 8 so many of the examples in the documetation will use linux commands and syntax_
+## Get started with IaC Ansible Lab 
+Note: My local test lab is centOS 8 so many of the examples in the documetation will use linux commands and syntax
 
 Software versions:
 Terraform 0.12.26
@@ -36,7 +36,7 @@ The Terraform code covers:
 -Bootstrapping the ansible node to install ansible as well as some helpful tools that you might need.
 -Bootstrapping the windows server to run 'ConfigureRemotingForAnsible.ps1' to allow winrm connectivity to your windows server from your ansible node.
 
-### Get started with Ansible:
+## Get started with Ansible:
 Once the terraform apply is done, you will need to configure your inventory file on your Ansible control node to run some test playbooks. 
 Detailed instructions can be found here: https://github.com/Optikx187/Project_Mandalla/tree/master/Documentation
 
