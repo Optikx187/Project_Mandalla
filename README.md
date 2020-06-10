@@ -6,7 +6,7 @@ This project is mainly a hodgepodge of terraform code, powershell, and bash scri
 
 For now, all documentation is for CentOS and the Azure terraform provider, but AWS is on the list of future projects.
 
-## Prereqs before you begin
+Prereqs before you begin
 
 1.You need Terraform installed or you can use Azure CLI
 2.You will need a dedicated folder to store the terraform code
