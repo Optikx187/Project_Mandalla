@@ -29,7 +29,7 @@ Azure:
   Documentation for this is laid out here: _Project_Mandalla/Documentation/Configure_Terraform_for_Azure.txt_ 
 3) `Run 'terraform init'`
 4) `Run 'terraform plan'`
-5) Run `'terraform apply'`
+5) `Run 'terraform apply'`
 6) Thats it your ansible infrustructure is built in Azure. 
 7) To destroy the infrustructure use the command `terraform destroy`
 
