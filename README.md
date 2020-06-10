@@ -14,7 +14,8 @@ For now, all documentation is for CentOS and the Azure terraform provider, but A
 
 3)You will need to find your connection variables for your cloud service provider as programatic access to the platform is required. 
 
-  -Documentation to [Configure Terraform Forazure. ]https://github.com/Optikx187/Project_Mandalla/tree/master/Documentation/Configure_Terraform_for_Azure.txt.
+  -Documentation to configure Ansible for Azure.
+  https://github.com/Optikx187/Project_Mandalla/tree/master/Documentation/Configure_Terraform_for_Azure.txt.
  
 ### Get started with IaC Ansible Lab 
 _Note: My local test lab is centOS 8 so many of the examples in the documetation will use linux commands and syntax_
