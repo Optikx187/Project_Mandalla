@@ -78,7 +78,7 @@ variable "password"{
 ############ENDAz OS credential vars############
 ############Az bootstrap vars############
 variable "bashfile"{
-  default  = "./ansible_lnx_bootstrap.sh"
+  default  = "./ansible.lnx.bootstrap.sh"
 }
 variable "pwsfile"{
   default  = "./ConfigureRemotingForAnsible.ps1"
