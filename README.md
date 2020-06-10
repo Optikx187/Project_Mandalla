@@ -9,8 +9,11 @@ For now, all documentation is for CentOS and the Azure terraform provider, but A
 ### Prereqs before you begin
 
 1)You need Terraform installed or you can use Azure CLI
+
 2)You will need a dedicated folder to store the terraform code
+
 3)You will need to find your connection variables for your cloud service provider as programatic access to the platform is required. 
+
   -Documentation for Azure connection strings can be found at:
   https://github.com/Optikx187/Project_Mandalla/tree/master/Documentation/Configure_Terraform_for_Azure.txt
  
