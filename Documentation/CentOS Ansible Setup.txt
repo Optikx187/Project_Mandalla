@@ -1,8 +1,8 @@
-CentOS Ansible Install and Setup to configure a Windows Hosts on Hyper-V 
+Ansible Install and Setup for debian based linux distributions(CentOS, RHEL)
 ========================================
 Prereq
 ========================================
-    -Download CentOS: 
+    -Download CentOS ISO: 
         https://www.centos.org/download/
 
     -Install Linux Distro on Hyper-V
@@ -22,16 +22,7 @@ Prereq
 
     -Install open-ssh(unless using OS on cloud provider)
         Doc: https://phoenixnap.com/kb/how-to-enable-ssh-centos-7
-        sudo yum –y install openssh-server openssh-clients
-    
-    Optional: 
-        -Install hyper-v tools (powershell hyper v integration)
-            cmd: sudo yum install -y hyperv-daemons
-        -Install scoop (powershell customizer)
-            Note: Can be used to install openssh for remoting into Linux VM(very helpful)
-            cmd: Set-ExecutionPolicy RemoteSigned -scope CurrentUser
-            cmd: Invoke-Expression (New-Object System.Net.WebClient).DownloadString('https://get.scoop.sh')
-            
+        sudo yum –y install openssh-server openssh-clients            
 ========================================
 Ansible Install on Master Node(CentOS)
 ========================================
@@ -99,16 +90,14 @@ Linux connection test
     3) Test Connection to linux host: 
         cmd: ansible all -i /etc/ansible/hosts_lin -m ping
    
-
-
 ========================================
 Ansible Config on Windows Node
 ========================================
-1) Run ConfigureRemotingForAnsible.ps1 on windows host to configure ansible for windows
+1) Run ConfigureRemotingForAnsible.ps1(found on the internet and in official ansible docs) on windows host to configure ansible for windows
     Creates: 
         basic auth support
         enable ssl listener
-        enables psremoting
+        enables PSremoting
         adds firewall rule to allow winrm https
 
 ========================================
@@ -217,3 +206,13 @@ Basic Linux Playbook examples
     https://networknuts.net/basic-ansible-playbooks/ 
 Linux Sudoers Addition for passwordless playbooks
 https://phoenixnap.com/kb/how-to-create-add-sudo-user-centos#:~:text=%20How%20to%20Add%20Users,User%20to%20Group%20More
+
+========================================
+Additional Help if using HYPER-V
+========================================
+-Install hyper-v tools (powershell hyper v integration)
+    cmd: sudo yum install -y hyperv-daemons
+-Install scoop (powershell customizer)
+    Note: Can be used to install openssh for remoting into Linux VM(very helpful)
+    cmd: Set-ExecutionPolicy RemoteSigned -scope CurrentUser
+    cmd: Invoke-Expression (New-Object System.Net.WebClient).DownloadString('https://get.scoop.sh')
