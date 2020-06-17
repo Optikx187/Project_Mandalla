@@ -1,0 +1,59 @@
+========================================
+GitLab Setup and Pipeline Tutorial for CentOS
+========================================
+
+Instructions are for GitLab CE (Community Edition) and CentOS 8 on 64 bit architecture.
+This will not cover SSL certs for HTTPS
+
+========================================
+Prereqs:
+    nano
+    firewalld 
+========================================
+Install Steps
+========================================
+1) Install Dependencies:
+        cmd: sudo yum -y update
+        cmd: sudo yum -y install curl vim policycoreutils python3-policycoreutils
+    -Install Mail Server(optional):
+        cmd: sudo yum -y install postfix
+    -Start and enable service:
+        cmd: sudo systemctl enable postfix && sudo systemctl start postfix
+        -To Stop:
+        cmd: sudo systemctl stop postfix
+2) Add Gitlab CE REpo
+    Note: Packages specifically for RHEL and CentOS
+        cmd: curl -s https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.rpm.sh | sudo bash
+
+3) Install GitLab CE on CentOS/RHEL
+        cmd: sudo yum install gitlab-ce
+
+4) Configure GitLab
+    -Open main config file in editor
+        cmd: sudo nano /etc/gitlab/gitlab.rb
+
+    -Set URL: 
+        line: external_url 'http://<ip-of-server>'
+        NOTE: the url can be any url you choose
+
+    -Run reconfigure script: 
+        cmd: sudo gitlab-ctl reconfigure
+        cmd: sudo gitlab-ctl restart
+        
+5) Set Firewall rules
+    sudo firewall-cmd --permanent --add-service={ssh,http,https} --permanent
+    sudo firewall-cmd --reload
+6) Login to your set URL: 
+    browser: http://192.168.X.X
+
+========================================
+Create GitLab Pipeline
+========================================
+WIP
+
+========================================
+Helpful Documentation: 
+========================================
+Install
+    https://computingforgeeks.com/how-to-install-and-configure-gitlab-on-centos-rhel/#:~:text=Install%20and%20Configure%20GitLab%20on,GitLab%20Web%20Console.%20More%20items
+    https://www.howtoforge.com/tutorial/how-to-install-and-configure-gitlab-ce-on-centos-7/ 
