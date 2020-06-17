@@ -44,7 +44,10 @@ Install Steps
     sudo firewall-cmd --permanent --add-service={ssh,http,https} --permanent
     sudo firewall-cmd --reload
 6) Login to your set URL: 
+    
     browser: http://192.168.X.X
+7) Create root user password
+8) Login as root user
 
 ========================================
 Create GitLab Pipeline
