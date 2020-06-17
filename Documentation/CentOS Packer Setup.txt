@@ -9,6 +9,7 @@ Prereqs
 Ensure the following packages are installed: 
     wget
     unzip 
+    
 Packer Workspace Scripts can be downloaded from GitHub: 
 
    GitHub: https://github.com/Optikx187/Project_Mandalla/tree/master/AWS%20Packer/Example
