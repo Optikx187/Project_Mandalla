@@ -1,7 +1,6 @@
 ========================================
 Packer Setup and Tutorial for CentOS
 ========================================
-
 Instructions are for packer version 1.6.0 and CentOS 8 on 64 bit architecture.
 
 ========================================
@@ -10,7 +9,11 @@ Prereqs
 Ensure the following packages are installed: 
     wget
     unzip 
-    
+
+Packer Workspace Scripts can be downloaded from GitHub: 
+
+   GitHub: https://github.com/Optikx187/Project_Mandalla/tree/master/AWS%20Packer/Example
+
 Configure AWS User with Prgramatic access: 
     User with 'AmazonEC2FullAccess' or 'AdministratorAccess' to create images
         Steps: 
