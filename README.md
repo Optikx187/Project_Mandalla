@@ -5,6 +5,10 @@ This project is mainly a hodgepodge of terraform code, powershell, and bash scri
 
 For now, all documentation is for CentOS and the Azure terraform provider, but AWS is on the list of future projects.
 
+Reasoning behind CentOS use in lieu of Ubuntu/Fedora: 
+
+CentOS is based on the RHEL distro which is what most commercial enterprises use. Ubuntu is based on debian which is not RHEL and Fedora is an upstream distribution, meaning that software is released with out prior testing. 
+
 Prereqs before you begin
 
 ## Get started with IaC Ansible Lab 
