@@ -39,7 +39,7 @@ Install Steps
     -Run reconfigure script: 
         cmd: sudo gitlab-ctl reconfigure
         cmd: sudo gitlab-ctl restart
-        
+       
 5) Set Firewall rules
     sudo firewall-cmd --permanent --add-service={ssh,http,https} --permanent
     sudo firewall-cmd --reload
@@ -52,11 +52,56 @@ Install Steps
 ========================================
 Create GitLab Pipeline
 ========================================
-WIP
+Prereqs:
+    You must install and configure GitLab Runner to run docker instances using the command line on the server where Git Lab is installed
+    steps to install: 
+        -Install git:
+            cmd: sudo dnf install git
+        -Download the runner: 
+            cmd: curl -LJO https://gitlab-runner-downloads.s3.amazonaws.com/latest/rpm/gitlab-runner_amd64.rpm
+        -Install
+            cmd: rpm -i gitlab-runner_amd64.rpm
 
+1) Create or clone an existing project
+
+2)configure GitLab Runner: 
+            -In Gitlab Navigate to Project > Settings > CI/CD 
+                -Locate 'Set up specific Runner manually'
+                -Copy the url and tokens for later use
+            -In shell command line run 
+                cmd: sudo gitlab-runner register
+            -Paste the URL copied above and hit enter
+            -Paste the token copied above and hit enter
+            -Provide description 
+            -Provide tag(or leave blank to run the pipeline without tags)
+            -Provide a runner executor
+                Type: docker 
+            -Provide the default docker image:
+                alpine:latest
+            -Done!
+
+3) In Gitlab, create a file within the project named '.gitlab-ci.yml'
+    NOTE: This is a standard naming convention and will hold CI configureations
+
+4) Define duild steps
+
+Troubleshooting:
+    If job is hung and stating there are no runners assigned then you need to follow steps outlined below: 
+        https://stackoverflow.com/questions/53370840/this-job-is-stuck-because-the-project-doesnt-have-any-runners-online-assigned
+    -Also Change permissions to /etc/gitlab-runner
+        cmd: sudo chmod 755 /etc/gitlab-runner
+    -Gitlab runner log for additional Troubleshooting   
+        journalctl -u gitlab-runner -f
+    
 ========================================
 Helpful Documentation: 
 ========================================
-Install
+Install Gitlab
     https://computingforgeeks.com/how-to-install-and-configure-gitlab-on-centos-rhel/#:~:text=Install%20and%20Configure%20GitLab%20on,GitLab%20Web%20Console.%20More%20items
     https://www.howtoforge.com/tutorial/how-to-install-and-configure-gitlab-ce-on-centos-7/ 
+Install Git:
+    https://phoenixnap.com/kb/how-to-install-git-centos-8#:~:text=Install%20Git%20on%20CentOS%208%20from%20Local%20Repository,CentOS%208%20by%20prompting%20for%20the%20version%20information%3A 
+Install Gitlab Runner: 
+    https://docs.gitlab.com/runner/install/linux-manually.html 
+    Register gitlab runner:
+    -https://docs.gitlab.com/runner/register/index.html#gnulinux
