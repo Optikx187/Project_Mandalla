@@ -15,12 +15,7 @@ Install Steps
 1) Install Dependencies:
         cmd: sudo yum -y update
         cmd: sudo yum -y install curl vim policycoreutils python3-policycoreutils
-    -Install Mail Server(optional):
-        cmd: sudo yum -y install postfix
-    -Start and enable service:
-        cmd: sudo systemctl enable postfix && sudo systemctl start postfix
-        -To Stop:
-        cmd: sudo systemctl stop postfix
+
 2) Add Gitlab CE REpo
     Note: Packages specifically for RHEL and CentOS
         cmd: sudo curl -s https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.rpm.sh | sudo bash
@@ -68,7 +63,7 @@ Prereqs:
                 advertise_address = "localhost:80"
 
 1)Create or clone an existing project from github
-            -In github select projects on th etop banner
+            -In github select projects on the top banner
             -Select your projects
             -Select new project 
             -You can either import an existing project using a developer access key on github or create a new one
