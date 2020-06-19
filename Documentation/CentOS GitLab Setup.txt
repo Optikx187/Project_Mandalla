@@ -23,17 +23,17 @@ Install Steps
         cmd: sudo systemctl stop postfix
 2) Add Gitlab CE REpo
     Note: Packages specifically for RHEL and CentOS
-        cmd: curl -s https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.rpm.sh | sudo bash
+        cmd: sudo curl -s https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.rpm.sh | sudo bash
 
 3) Install GitLab CE on CentOS/RHEL
-        cmd: sudo yum install gitlab-ce
+        cmd: sudo yum -y install gitlab-ce
 
 4) Configure GitLab
     -Open main config file in editor
         cmd: sudo nano /etc/gitlab/gitlab.rb
 
-    -Set URL: 
-        line: external_url 'http://<ip-of-server>'
+    -Set HTTP URL: 
+        line: external_url 'http://<ip-of-your-server>'
         NOTE: the url can be any url you choose
 
     -Run reconfigure script: 
@@ -41,11 +41,10 @@ Install Steps
         cmd: sudo gitlab-ctl restart
        
 5) Set Firewall rules
-    sudo firewall-cmd --permanent --add-service={ssh,http,https} --permanent
-    sudo firewall-cmd --reload
+        cmd: sudo firewall-cmd --permanent --add-service={ssh,http,https} --permanent
+        cmd: sudo firewall-cmd --reload
 6) Login to your set URL: 
-    
-    browser: http://192.168.X.X
+        browser: http://192.168.X.X
 7) Create root user password
 8) Login as root user
 
@@ -53,17 +52,26 @@ Install Steps
 Create GitLab Pipeline
 ========================================
 Prereqs:
-    You must install and configure GitLab Runner to run docker instances using the command line on the server where Git Lab is installed
+    You must install and configure GitLab Runner to run a shell instances using the command line on the server where Git Lab is installed
     steps to install: 
         -Install git:
-            cmd: sudo dnf install git
+            cmd: sudo yum -y install git
         -Download the runner: 
-            cmd: curl -LJO https://gitlab-runner-downloads.s3.amazonaws.com/latest/rpm/gitlab-runner_amd64.rpm
+            cmd: sudo curl -LJO https://gitlab-runner-downloads.s3.amazonaws.com/latest/rpm/gitlab-runner_amd64.rpm
         -Install
-            cmd: rpm -i gitlab-runner_amd64.rpm
+            cmd: sudo rpm -i gitlab-runner_amd64.rpm
+        -Configure config.toml
+            cmd: sudo nano /etc/gitlab-runner/config.toml
+            add the following lines under [session_server]
+            add: 
+                listen_address = "0.0.0.0:8888"
+                advertise_address = "localhost:80"
 
-1) Create or clone an existing project
-
+1)Create or clone an existing project from github
+            -In github select projects on th etop banner
+            -Select your projects
+            -Select new project 
+            -You can either import an existing project using a developer access key on github or create a new one
 2)configure GitLab Runner: 
             -In Gitlab Navigate to Project > Settings > CI/CD 
                 -Locate 'Set up specific Runner manually'
@@ -73,17 +81,19 @@ Prereqs:
             -Paste the URL copied above and hit enter
             -Paste the token copied above and hit enter
             -Provide description 
-            -Provide tag(or leave blank to run the pipeline without tags)
+            -Leave tag blank to run the pipeline without tags
             -Provide a runner executor
-                Type: docker 
-            -Provide the default docker image:
-                alpine:latest
+                Type: shell 
             -Done!
 
-3) In Gitlab, create a file within the project named '.gitlab-ci.yml'
+3) In Gitlab, on project page,create a file within the project named '.gitlab-ci.yml'
     NOTE: This is a standard naming convention and will hold CI configureations
-
-4) Define duild steps
+4) Use the shell template from the right dropdown
+    The template comes with pre defined build steps
+5) Run your pipeline 
+    Navigate to Project > CI/CD
+    Select Run Pipeline > Run Pipeline
+6) your Pipeline should complete.
 
 Troubleshooting:
     If job is hung and stating there are no runners assigned then you need to follow steps outlined below: 
@@ -92,6 +102,11 @@ Troubleshooting:
         cmd: sudo chmod 755 /etc/gitlab-runner
     -Gitlab runner log for additional Troubleshooting   
         journalctl -u gitlab-runner -f
+    -Verify that /erc/gitlab-runner/congig.toml file is correct:
+          listen_address = "0.0.0.0:8888"
+          advertise_address = "localhost:80"
+    -Debug 
+        sudo gitlab-runner --debug run
     
 ========================================
 Helpful Documentation: 
@@ -105,3 +120,7 @@ Install Gitlab Runner:
     https://docs.gitlab.com/runner/install/linux-manually.html 
     Register gitlab runner:
     -https://docs.gitlab.com/runner/register/index.html#gnulinux
+Pipeline config reference: 
+    https://docs.gitlab.com/ee/ci/yaml/#tags
+Advanced Pipeline Config: 
+    https://docs.gitlab.com/runner/configuration/advanced-configuration.html 
