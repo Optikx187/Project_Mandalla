@@ -130,7 +130,7 @@ Create GitLab Docker Pipeline
 
 
 
-Troubleshooting:
+GitLab Runner Troubleshooting:
     If job is hung and stating there are no runners assigned then you need to follow steps outlined below: 
         https://stackoverflow.com/questions/53370840/this-job-is-stuck-because-the-project-doesnt-have-any-runners-online-assigned
     -Gitlab runner log for additional Troubleshooting   
