@@ -3,7 +3,10 @@ GitLab Setup and Pipeline Tutorial for CentOS
 ========================================
 
 Instructions are for GitLab CE (Community Edition) and CentOS 8 on 64 bit architecture.
-This will not cover SSL certs for HTTPS
+
+These instructions will also demonstrate how to set up a shell CI/CD pipeline as well as a docker CI/CD pipeline 
+
+This doc will not cover SSL certs for HTTPS or securing the linux host/container instance.
 
 ========================================
 Prereqs:
@@ -44,7 +47,7 @@ Install Steps
 8) Login as root user
 
 ========================================
-Create GitLab Pipeline
+Create GitLab Shell Pipeline
 ========================================
 Prereqs:
     You must install and configure GitLab Runner to run a shell instances using the command line on the server where Git Lab is installed
@@ -81,20 +84,55 @@ Prereqs:
                 Type: shell 
             -Done!
 
+            
+
 3) In Gitlab, on project page,create a file within the project named '.gitlab-ci.yml'
-    NOTE: This is a standard naming convention and will hold CI configureations
+    NOTE: This is a standard naming convention and will hold CI configurations
 4) Use the shell template from the right dropdown
     The template comes with pre defined build steps
 5) Run your pipeline 
     Navigate to Project > CI/CD
     Select Run Pipeline > Run Pipeline
-6) your Pipeline should complete.
+6) Your shell pipeline should complete. Refer to the troubleshooting section below/helpful docs if you rin into any issues
+
+========================================
+Create GitLab Docker Pipeline
+========================================
+
+1) Install docker on CentOS
+
+    -Enable Docker CE Repo:
+        cmd: sudo dnf config-manager --add-repo=https://download.docker.com/linux/centos/docker-ce.repo
+        cmd: sudo dnf repolist -v
+    -Install latest and most appropriate version of docker:
+        cmd: sudo dnf install docker-ce --nobest
+    -start and test docker
+        cmd: sudo systemctl enable --now docker
+    -confirm docker is running
+        cmd: systemctl status docker
+    -add user to the docker group as well as gitlab runner user
+        cmd: sudo usermod -aG docker $USER
+        cmd: sudo usermod -aG docker gitlab-runner
+    -firewall will need to be disabled for DNS resolution inside Docker containers
+        cmd: sudo systemctl disable firewalld
+    -reboot system:
+        cmd: sudo reboot
+    -test docker install
+        -pull alpine image
+            cmd: docker pull alpine
+        -check if image is available
+            cmd: docker images
+        -use docker to run the container and run simple command
+            cmd: docker run -it --rm alpine /bin/sh
+            cmd: /# apk update
+2) Configure Gitlab Docker Runner
+
+
+
 
 Troubleshooting:
     If job is hung and stating there are no runners assigned then you need to follow steps outlined below: 
         https://stackoverflow.com/questions/53370840/this-job-is-stuck-because-the-project-doesnt-have-any-runners-online-assigned
-    -Also Change permissions to /etc/gitlab-runner
-        cmd: sudo chmod 755 /etc/gitlab-runner
     -Gitlab runner log for additional Troubleshooting   
         journalctl -u gitlab-runner -f
     -Verify that /erc/gitlab-runner/congig.toml file is correct:
@@ -119,3 +157,9 @@ Pipeline config reference:
     https://docs.gitlab.com/ee/ci/yaml/#tags
 Advanced Pipeline Config: 
     https://docs.gitlab.com/runner/configuration/advanced-configuration.html 
+
+Install Gitlab inside docker container(ubuntu)
+    https://www.howtoforge.com/how-to-install-gitlab-server-with-docker-on-ubuntu-1804/#:~:text=How%20to%20Install%20Gitlab%20Server%20with%20Docker%20on,Step%205%20-%20Install%20Docker%20Compose.%20More%20items
+
+Install Docker on Gitlab server: 
+https://phoenixnap.com/kb/how-to-install-docker-on-centos-8 
