@@ -126,8 +126,49 @@ Create GitLab Docker Pipeline
             cmd: docker run -it --rm alpine /bin/sh
             cmd: /# apk update
 2) Configure Gitlab Docker Runner
+    -Create Gitlab Runner
+        cmd: sudo gitlab-runner register
+        -Enter Tokens form Gitlab CI/CD runner settings
+        -For Description: Enter whatever you choose
+        -For Tag: leave blank unless you plan on using tag
+        -For executor: docker
+        -For image: alpine:latest
+    -Verify gitlab runner and docker are enabled
+        cmd: systemctl is-enabled gitlab-runner
+        cmd: systemctl is-enabled docker
+    -Ensure the multi runner is started: 
+        cmd: sudo gitlab-runner run
+3) Edit gitlab-ci.yml
+    Add the follwing lines to test your container:
+    Contents: 
+stages:
+  - build
+  - test
 
+build:
+  stage: build
+  tags:
+    - my-runner
+  script:
+    - echo "this is building"
+    - hostname
+    - mkdir builds
+    - touch builds/data.txt
+    - echo "true" > builds/data.txt
+  artifacts:
+    paths:
+      - builds/
 
+test:
+  stage: test
+  tags:
+    - my-runner
+  script:
+    - echo "this is testing"
+    - hostname
+    - test -f builds/data.txt
+    - grep "true" builds/data.txt
+4) commit changes and verify the containers are created.
 
 
 GitLab Runner Troubleshooting:
@@ -135,11 +176,14 @@ GitLab Runner Troubleshooting:
         https://stackoverflow.com/questions/53370840/this-job-is-stuck-because-the-project-doesnt-have-any-runners-online-assigned
     -Gitlab runner log for additional Troubleshooting   
         journalctl -u gitlab-runner -f
-    -Verify that /erc/gitlab-runner/congig.toml file is correct:
+    -Verify that /etc/gitlab-runner/config.toml file is correct:
           listen_address = "0.0.0.0:8888"
           advertise_address = "localhost:80"
     -Debug 
+        #Use the below command for multiple gitlab runners present.
         sudo gitlab-runner --debug run
+        # to control keep control of the command line 
+        nohup sudo gitlab-runner run &
     
 ========================================
 Helpful Documentation: 
@@ -162,4 +206,7 @@ Install Gitlab inside docker container(ubuntu)
     https://www.howtoforge.com/how-to-install-gitlab-server-with-docker-on-ubuntu-1804/#:~:text=How%20to%20Install%20Gitlab%20Server%20with%20Docker%20on,Step%205%20-%20Install%20Docker%20Compose.%20More%20items
 
 Install Docker on Gitlab server: 
-https://phoenixnap.com/kb/how-to-install-docker-on-centos-8 
+    https://phoenixnap.com/kb/how-to-install-docker-on-centos-8 
+
+Setup Docker Gitlab runner
+    https://blog.ruanbekker.com/blog/2018/12/20/setup-a-gitlab-runner-on-your-own-server-to-run-your-jobs-that-gets-triggered-from-gitlab-ci/
