@@ -1,9 +1,18 @@
 [winsrv]
 10.0.1.xxx
 
-
+#If you are using credential authentication
 [winsrv:vars]
 ansible_user=xxx
 ansible_password=xxx
 ansible_connection=winrm
 ansible_winrm_server_cert_validation=ignore
+
+#If you are using certificate authentication
+[winsrv:vars]
+ansible_winrm_cert_key_pem=/path/to/key
+ansible_winrm_cert_pem=/path/to/cert
+ansible_winrm_transport=certificate
+ansible_port=5986
+ansible_winrm_scheme=https
+ansible_connection=winrm

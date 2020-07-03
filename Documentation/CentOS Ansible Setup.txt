@@ -43,7 +43,9 @@ Ansible Install on Master Node(CentOS)
 
 5) Install python winrm libraries to connect to windows hosts
     NOTE: Requires 1 additional powershell script to be run on the windows host to configure
-    cmd: sudo yum install python-winrm
+    cmd: pip install pywinrm
+    -or- 
+    cmd: pip3 install pywinrm
 
 Windows connection Test
 
