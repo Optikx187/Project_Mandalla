@@ -193,6 +193,29 @@ Linux Playbooks
             requires sudoers file manipulation
             doc: https://www.cyberciti.biz/faq/how-to-set-and-use-sudo-password-for-ansible-vault/
             doc: https://phoenixnap.com/kb/how-to-create-add-sudo-user-centos#:~:text=%20How%20to%20Add%20Users,User%20to%20Group%20More 
+========================================
+Configure ansible configuration file(ansible.cfg)
+for custom host file location
+========================================
+
+1) Ansible searches for the configuration file in the following order: 
+        environment variable: ANSIBLE_CONFIG
+        current directory:./ansible.cfg
+        home directory: ~/.ansible.cfg
+        default: /etc/ansible/ansible.cfg
+
+2) In your local ansible directory create an ansible config file:
+        cmd: touch ansible.cfg && nano ansible.cfg
+
+3) You can add ansible specific information in the ansible.cfg file
+   for this example we are going to add a custom inventory/hosts file location
+        In ansible config file add:
+        [defaults]
+        inventory = /path/to/host/file
+
+4) Now you can run a playbook or ping without specifying a inventory file with -i /path/to/inventory file
+        cmd example: ansible all -m win_ping
+        cmd example: ansible-playbook /path/to/playbook
 
 ========================================
 Helpful Documentation: 
