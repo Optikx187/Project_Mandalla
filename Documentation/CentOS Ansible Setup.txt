@@ -216,7 +216,13 @@ for custom host file location
 4) Now you can run a playbook or ping without specifying a inventory file with -i /path/to/inventory file
         cmd example: ansible all -m win_ping
         cmd example: ansible-playbook /path/to/playbook
-
+========================================
+Helpful Tips
+========================================
+You can trouble shoot playbooks by adding a -v after a ansible command for additional logging
+    -v for simple verbose logging up to -vvvv for additional information. 
+        cmd: ansible -i hosts -m win_shell -a "get-process" -vvvv
+        
 ========================================
 Helpful Documentation: 
 ========================================
