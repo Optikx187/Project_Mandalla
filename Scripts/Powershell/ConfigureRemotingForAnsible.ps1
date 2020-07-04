@@ -365,58 +365,6 @@ Function Main
         Throw "Unable to establish an HTTP or HTTPS remoting session."
     }
     Write-VerboseLog "PS Remoting has been successfully configured for Ansible."
-    ##
-    #Import generated selfsigned cert from remote server
-    if(Test-Path "C:\temp\cert.pem" )
-    {
-        Write-VerboseLog "Importing generated cert.pem"
-        $pubKeyFilePath = 'C:\temp\cert.pem'
-        ## Import the public key into Trusted Root Certification Authorities and Trusted People
-        $null = Import-Certificate -FilePath $pubKeyFilePath -CertStoreLocation 'Cert:\LocalMachine\Root'
-        $null = Import-Certificate -FilePath $pubKeyFilePath -CertStoreLocation 'Cert:\LocalMachine\TrustedPeople'
-        Write-VerboseLog "Certificate has been added to Root and Trusted People Locations"
-    }
-    else
-    {
-        Write-VerboseLog "certificate not copied to c:\temp"
-        exit
-    }
     
-    #Link cert to local user account
-    if(Test-Path "C:\temp\creds.txt")
-    {
-        
-        $cred = get-content "C:\temp\creds.txt"
-        if($cred.count -eq "2")
-        {
-            Write-VerboseLog "Linking Cert to local user account.Account: $testUserAccountName"
-            $testUserAccountName = "$($cred[0])"
-            $testUserAccountPassword = (ConvertTo-SecureString -String "$($cred[1])" -AsPlainText -Force )
-            $credential = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $testUserAccountName, $testUserAccountPassword
-            ## Find the cert thumbprint for the client certificate created on the Ansible host
-            $ansibleCert = Get-ChildItem -Path 'Cert:\LocalMachine\Root' | Where-Object {$_.Subject -eq 'CN=administrator'}
-            
-            $params = @{
-                Path = 'WSMan:\localhost\ClientCertificate'
-                Subject = "$testUserAccountName@localhost"
-                URI = '*'
-                Issuer = $ansibleCert.Thumbprint
-              Credential = $credential
-                Force = $true
-            }
-            New-Item @params
-        }
-    }
-    else
-    {
-        Write-VerboseLog "Credentials not found in C:\temp\creds.txt."
-    }
-    #configure server for credential authentication
-    Set-Item -Path WSMan:\localhost\Service\Auth\Certificate -Value $true 
-    
-    #cleanup
-    Remove-Item -Path "c:\temp\*" -Force
-    Write-VerboseLog "Script complete."
-
 }
 Main
