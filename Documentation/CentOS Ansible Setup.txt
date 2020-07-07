@@ -228,15 +228,14 @@ Configure ansible playbook to work with ansible vault
 192.168.1.131
 
 [srv:vars]
-ansible_winrm_cert_key_pem=/etc/ansible/self_signed_certs/cert_key.pem
-ansible_winrm_cert_pem=/etc/ansible/self_signed_certs/cert.pem
-ansible_winrm_transport=certificate
+ansible_user=administrator
+ansible_password= password.oh.no!
 ansible_port=5986
 ansible_winrm_scheme=https
 ansible_connection=winrm
 ansible_winrm_server_cert_validation=ignore
 
-    -Hosts file as YML
+    -Hosts file as YML:
 ---
 all:
   hosts:
@@ -252,28 +251,28 @@ all:
 ...
 
 2) Run the ansible-vault command to create encrypted string to replace variable file
-        cmd: ansible-vault encrypt_string --vault-id user1@prompt 'Password for your user' --name 'ansible_password'
+        cmd: ansible-vault encrypt_string --vault-id user1@prompt 'Password.for.your.user' --name 'ansible_password'
     -Enter decrypting password, this will be used whenever you want to decrypt credentials   
     -Copy output: 
 
           ansible_password: !vault |
           $ANSIBLE_VAULT;1.2;AES256;user1
-          38346431313037393064623637343033323438376134313934316635383264346233663365396439
+          34346431313037393064623637343033323438376134313934316635383264346233663365396439
           6234353039343432383663643964306138306161373237630a646533396136376433656165333037
           36303438376230316631333331636234666361633137636430633366313733623739336163363064
           3862336165376335620a643264353430383563376430316639613938376437343361663032653865
-          3638
+          3639
 
     -Paste into hosts file: 
 
     ansible_user: administrator
     ansible_password: !vault |
           $ANSIBLE_VAULT;1.2;AES256;user1
-          38346431313037393064623637343033323438376134313934316635383264346233663365396439
+          34346431313037393064623637343033323438376134313934316635383264346233663365396439
           6234353039343432383663643964306138306161373237630a646533396136376433656165333037
           36303438376230316631333331636234666361633137636430633366313733623739336163363064
           3862336165376335620a643264353430383563376430316639613938376437343361663032653865
-          3638
+          3639
     ansible_port: 5986
 
 3) Run the playbook command to pull the vault credentials
@@ -281,9 +280,10 @@ all:
 
 4) You can also save the credentials in a text file to be used. The file 
    can be stored in a location enforced with RBAC or encrypted with a shell script and decrypted for use at runtime.
-    -Create password file
+    -Create password file:
         cmd: echo "123qwe" > ./tmp/pass_word_file
-    -Use password file in ansible-playbook call
+        
+    -Use password file in ansible-playbook call:
         cmd: ansible-playbook -i hosts --vault-id user1@/tmp/pf ./playbooks/Ansible_to_windows.yml
 
 5) This method can be used for any variables not just the ansible password. 
