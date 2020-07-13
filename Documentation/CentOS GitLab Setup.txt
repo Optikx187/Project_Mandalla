@@ -176,14 +176,18 @@ GitLab Runner Troubleshooting:
         https://stackoverflow.com/questions/53370840/this-job-is-stuck-because-the-project-doesnt-have-any-runners-online-assigned
     -Gitlab runner log for additional Troubleshooting   
         journalctl -u gitlab-runner -f
-    -Verify that /etc/gitlab-runner/config.toml file is correct:
+    -Verify that nano /etc/gitlab-runner/config.toml file is correct:
           listen_address = "0.0.0.0:8888"
           advertise_address = "localhost:80"
     -Debug 
         #Use the below command for multiple gitlab runners present.
-        sudo gitlab-runner --debug run
-        # to control keep control of the command line 
-        nohup sudo gitlab-runner run &
+            sudo gitlab-runner --debug run
+        #To control keep control of the command line 
+            nohup sudo gitlab-runner run &
+            
+        #Also works on reboot: 
+            sudo gitlab-runner stop
+            sudo gitlab-runner run
     
 ========================================
 Helpful Documentation: 

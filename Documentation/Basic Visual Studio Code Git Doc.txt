@@ -16,3 +16,6 @@ cmd: git commit -m "message"
 #push to Git
     NOTE: You must commit first
  cmd: git push
+
+#setup ssh keys: 
+ssh-keygen

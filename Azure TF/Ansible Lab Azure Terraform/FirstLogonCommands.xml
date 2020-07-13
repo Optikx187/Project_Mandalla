@@ -5,8 +5,13 @@
         <Order>11</Order>
     </SynchronousCommand>
     <SynchronousCommand>
+        <CommandLine>cmd /c "mkdir C:\temp\"</CommandLine
+        ><Description>MakeDir</Description>
+        <Order>12</Order>
+    </SynchronousCommand>
+    <SynchronousCommand>
         <CommandLine>powershell.exe -sta -ExecutionPolicy Unrestricted -file C:\ConfigureRemotingForAnsible.PS1</CommandLine
         ><Description>RunScript</Description>
-        <Order>12</Order>
+        <Order>13</Order>
     </SynchronousCommand>
 </FirstLogonCommands>
