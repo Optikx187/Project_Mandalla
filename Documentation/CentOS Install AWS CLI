@@ -5,9 +5,12 @@ Note: The below steps are for installing the latest version of AWS CLI
 
 Run the following commands in the CentOS command line
 
-1) curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-2) unzip awscliv2.zip
-3) sudo ./aws/install
+    1) curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+    2) unzip awscliv2.zip
+    3) sudo ./aws/install
+
+Verify the install with: 
+     aws --version
 
 Helpful Docs:
     https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2-linux.html
