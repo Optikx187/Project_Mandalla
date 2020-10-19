@@ -47,6 +47,9 @@ Prereq
 ========================================
 Install Terraform
 ========================================
+
+NOTE: these instructions are for terraform 12.26
+
 1) Download terraform zip:
     cmd: sudo wget https://releases.hashicorp.com/terraform/0.12.26/terraform_0.12.26_linux_amd64.zip
 
@@ -60,8 +63,11 @@ Install Terraform
     cmd: sudo /usr/local/bin/terraform --help
 
 ===============================================
-AWS: Create a template script file fo Terraform
+AWS: Create a template script file for Terraform
 ===============================================
+
+NOTE: These instructions do not cover ami creation
+
 1) Create Terraform Directory
     cmd: sudo mkdir Terraform
 
