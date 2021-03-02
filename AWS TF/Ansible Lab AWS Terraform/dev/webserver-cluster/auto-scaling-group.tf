@@ -2,7 +2,7 @@ resource "aws_launch_configuration" "this_asg_lc" {
   image_id        = var.ami_id
   instance_type   = var.instance_type
   security_groups = [aws_security_group.this_sg.id]
-  user_data = templatefile("./simple-web-server.sh.tpl", {port = var.server_port})
+  user_data = templatefile("./simple-web-server.sh.tpl", {port = var.server_port, db_address = data.terraform_remote_state.db.address, db_port= data.terraform_remote_state.db.port })
 
   # Required when using a launch configuration with an auto scaling group.
   # https://www.terraform.io/docs/providers/aws/r/launch_configuration.html
@@ -15,7 +15,6 @@ resource "aws_autoscaling_group" "this_asg" {
     launch_configuration = aws_launch_configuration.this_asg_lc.id
     vpc_zone_identifier  = data.aws_subnet_ids.default.ids
     target_group_arns = [aws_lb_target_group.this_asg_tar.arn] # add
-    #availability_zones = data.aws_availability_zones.all.names 
     desired_capacity = 2
     force_delete = true
     #allow elb health check for generated instances

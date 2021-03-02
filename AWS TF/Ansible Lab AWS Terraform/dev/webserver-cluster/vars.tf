@@ -80,3 +80,8 @@ variable "instance_proto" {
     type        = string
     default     = "http"
 }
+variable "env" {
+    description = "environment for terraform code"
+    type        = string
+    default     = "dev"
+}
