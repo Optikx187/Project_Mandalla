@@ -15,7 +15,7 @@ resource "aws_autoscaling_group" "this_asg" {
     launch_configuration = aws_launch_configuration.this_asg_lc.id
     vpc_zone_identifier  = data.aws_subnet_ids.default.ids
     target_group_arns = [aws_lb_target_group.this_asg_tar.arn] # add
-    #availability_zones = data.aws_availability_zones.all.names 
+    availability_zones = data.aws_availability_zones.all.names 
     desired_capacity = 2
     force_delete = true
     #allow elb health check for generated instances
@@ -42,6 +42,7 @@ resource "aws_lb" "this_lb" {
   name               = var.alb_name
   load_balancer_type = "application"
   subnets            = data.aws_subnet_ids.default.ids
+  availability_zones = data.aws_availability_zones.all.names 
   security_groups    = [aws_security_group.this_alb.id]
 }
 resource "aws_lb_listener" "this_http" {

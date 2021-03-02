@@ -25,7 +25,7 @@ resource "aws_security_group" "this_alb" {
     name = var.sg_alb_name
     #allow inbound
     ingress  {
-        description = "allow traffic to elb from specified port"
+        description = "allow traffic to alb from specified port"
         from_port   = var.alb_sg_ingress
         to_port     = var.server_port
         protocol    = "tcp"

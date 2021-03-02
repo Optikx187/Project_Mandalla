@@ -9,7 +9,7 @@ variable "instance_name" {
 variable "ami_id" {
     description = "AMI used for web server"
     type        = string
-    default     = "ami-0c55b159cbfafe1f0"
+    default     = "ami-40d28157"
     }
 ##instance type
 ##
