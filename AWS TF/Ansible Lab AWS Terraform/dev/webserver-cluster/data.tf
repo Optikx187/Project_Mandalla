@@ -8,7 +8,6 @@ data "aws_vpc" "default" {
 ##
 data "aws_subnet_ids" "default" {
   vpc_id = data.aws_vpc.default.id
-  #tags = { Name = "public" } 
 }
 ##Pull from backend config
 ##

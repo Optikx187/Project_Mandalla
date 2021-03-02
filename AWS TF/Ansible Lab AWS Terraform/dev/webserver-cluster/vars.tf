@@ -80,8 +80,21 @@ variable "instance_proto" {
     type        = string
     default     = "http"
 }
+##
 variable "env" {
     description = "environment for terraform code"
     type        = string
     default     = "dev"
+}
+##
+variable "db_addressx" {
+    description = "ip for db"
+    type        = string
+    default     = data.terraform_remote_state.db.address
+}
+##
+variable "db_portx" {
+    description = "port for db"
+    type        = string
+    default     = data.terraform_remote_state.db.port
 }

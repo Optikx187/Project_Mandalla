@@ -2,7 +2,7 @@ resource "aws_launch_configuration" "this_asg_lc" {
   image_id        = var.ami_id
   instance_type   = var.instance_type
   security_groups = [aws_security_group.this_sg.id]
-  user_data = templatefile("./simple-web-server.sh.tpl", {port = var.server_port, db_address = data.terraform_remote_state.db.address, db_port= data.terraform_remote_state.db.port })
+  user_data = templatefile("./simple-web-server.sh.tpl", {port = var.server_port, db_address = var.db_addressx, db_port = var.db_portx})
 
   # Required when using a launch configuration with an auto scaling group.
   # https://www.terraform.io/docs/providers/aws/r/launch_configuration.html
