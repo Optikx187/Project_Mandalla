@@ -42,7 +42,7 @@ resource "aws_lb" "this_lb" {
   name               = var.alb_name
   load_balancer_type = "application"
   subnets            = data.aws_subnet_ids.default.ids
-  availability_zones = data.aws_availability_zones.all.names 
+  #availability_zones = data.aws_availability_zones.all.names 
   security_groups    = [aws_security_group.this_alb.id]
 }
 resource "aws_lb_listener" "this_http" {
