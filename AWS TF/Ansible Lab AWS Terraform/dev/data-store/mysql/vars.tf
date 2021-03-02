@@ -21,5 +21,5 @@ variable "region" {
 variable "db_name" {
   description = "The name to use for the database"
   type        = string
-  default     = "msql_db"
+  default     = "msqldb"
 }

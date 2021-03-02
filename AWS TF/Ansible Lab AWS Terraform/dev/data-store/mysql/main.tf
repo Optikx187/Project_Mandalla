@@ -8,7 +8,7 @@ provider "aws" {
   version = "~> 2.0"
 }
 resource "aws_db_instance" "this_msql" {
-  identifier_prefix   = "msql-db"
+  identifier_prefix   = "msqldb"
   engine              = "mysql"
   allocated_storage   = 10
   instance_class      = "db.t2.micro"
