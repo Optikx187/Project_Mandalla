@@ -1,4 +1,12 @@
+##
+##
+variable "region" {
+    description = "region for tf code"
+    type        = string
+    default     = "us-east-1"
+    }
 ##ec2 name 
+##
 variable "instance_name" {
     description = "Name of EC2 instance"
     type        = string
