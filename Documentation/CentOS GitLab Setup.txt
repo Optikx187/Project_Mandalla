@@ -70,7 +70,10 @@ Prereqs:
             -Select your projects
             -Select new project 
             -You can either import an existing project using a developer access key on github or create a new one
+
 2)configure GitLab Runner: 
+
+
             -In Gitlab Navigate to Project > Settings > CI/CD 
                 -Locate 'Set up specific Runner manually'
                 -Copy the url and tokens for later use
