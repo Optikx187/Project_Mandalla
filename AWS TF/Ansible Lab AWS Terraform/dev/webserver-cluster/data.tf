@@ -17,6 +17,6 @@ data "terraform_remote_state" "db" {
   config {
      bucket = "dev-tf-state-storage"
      key = "mysql/terraform.tfstate"
-     region = var.region
+     region = "us-east-1"
   }
 }
