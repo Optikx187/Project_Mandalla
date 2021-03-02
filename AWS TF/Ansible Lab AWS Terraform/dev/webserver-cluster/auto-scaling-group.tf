@@ -1,7 +1,7 @@
 resource "aws_launch_configuration" "this_asg_lc" {
   image_id        = var.ami_id
   instance_type   = var.instance_type
-  security_groups = [aws_security_group.instance.id]
+  security_groups = [aws_security_group.this_sg.id]
   user_data = templatefile("./simple-web-server.sh.tpl", {port = var.server_port})
 
   # Required when using a launch configuration with an auto scaling group.
