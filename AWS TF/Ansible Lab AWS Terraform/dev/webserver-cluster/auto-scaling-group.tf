@@ -1,9 +1,18 @@
+# Define SSH key pair for our instances
+resource "aws_key_pair" "default" {
+  key_name = "vpctestkeypair"
+  public_key = "var.key_path"
+}
+
 resource "aws_launch_configuration" "this_asg_lc" {
   image_id        = var.ami_id
   instance_type   = var.instance_type
-  security_groups = [aws_security_group.this_sg.id]
+  subnet_id       = aws_subnet.public_subnet.id
+  security_groups = [aws_security_group.this_websg.id, ]
+  key_name        = aws_key_pair.default.id
+  associate_public_ip_address = true
   #user_data = templatefile("./simple-web-server.sh.tpl", {port = var.server_port})
-  user_data       = data.template_file.user_data.rendered
+  user_data       = data.template_file.wb_srv_user_data.rendered
   # Required when using a launch configuration with an auto scaling group.
   # https://www.terraform.io/docs/providers/aws/r/launch_configuration.html
   lifecycle {
@@ -13,7 +22,8 @@ resource "aws_launch_configuration" "this_asg_lc" {
 resource "aws_autoscaling_group" "this_asg" {
 
     launch_configuration = aws_launch_configuration.this_asg_lc.id
-    vpc_zone_identifier  = data.aws_subnet_ids.default.ids
+    #vpc_zone_identifier  = data.aws_subnet_ids.default.ids
+    vpc_zone_identifier  = aws_subnet.public_subnet.id
     target_group_arns = [aws_lb_target_group.this_asg_tar.arn] # add
     desired_capacity = 2
     force_delete = true
@@ -22,7 +32,6 @@ resource "aws_autoscaling_group" "this_asg" {
     health_check_type = "ELB"
     health_check_grace_period = 300
     #placement_group = "value"
-    #vpc_zone_identifier = [ "value" ]
     min_size = 2
     max_size = 10
     tag {
@@ -37,10 +46,12 @@ resource "aws_autoscaling_group" "this_asg" {
     }
 
 }
+#load balancer config
 resource "aws_lb" "this_lb" {
   name               = var.alb_name
   load_balancer_type = "application"
-  subnets            = data.aws_subnet_ids.default.ids
+  #subnets            = data.aws_subnet_ids.default.ids
+  subnets            = aws_subnet.public_subnet.*.id
   #availability_zones = data.aws_availability_zones.all.names 
   security_groups    = [aws_security_group.this_alb.id]
 }
@@ -64,7 +75,8 @@ resource "aws_lb_target_group" "this_asg_tar" {
   name = var.alb_name
   port     = var.server_port
   protocol = "HTTP"
-  vpc_id   = data.aws_vpc.default.id
+  #vpc_id   = data.aws_vpc.default.id
+  vpc_id   = aws_vpc.default.id
 
   health_check {
     path                = "/"

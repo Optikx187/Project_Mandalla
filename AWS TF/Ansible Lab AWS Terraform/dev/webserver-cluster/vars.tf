@@ -1,10 +1,23 @@
 ##
 ##
-variable "region" {
+variable "aws_region" {
     description = "region for tf code"
     type        = string
     default     = "us-east-1"
     }
+##
+variable "organization" {
+    description = "organization"
+    type        = string
+    default     = "optkx"
+    }
+##
+variable "environment" {
+    description = "environment"
+    type        = string
+    default     = "dev"
+    }
+    
 ##ec2 name 
 ##
 variable "instance_name" {
@@ -85,4 +98,65 @@ variable "env" {
     description = "environment for terraform code"
     type        = string
     default     = "dev"
+}
+## Security 
+##
+variable "key_name" {
+    description = "keypair name"
+    type        = string
+    default = "ec2Key"      # if we keep default blank it will ask for a value when we execute terraform apply
+}
+# base_path for refrencing 
+variable "base_path" {
+    description = "keypair file path"
+    type        = string
+    default = "/scripts/security"
+}
+##optional keypath if not dynamically generated
+variable "key_path" {
+  description = "SSH Public Key path"
+  default = "/home/core/.ssh/id_rsa.pub"
+}
+##VPC
+##
+variable "vpc_name" {
+  description = "name of vpc"
+  type        = string
+  default = "not-set-vpc"
+}
+## vpc cidr
+variable "vpc_cidr" {
+  description = "CIDR for the VPC"
+  default = "11.1.0.0/16"
+}
+## vpc public ip cidr
+variable "public_subnet_cidr" {
+  description = "CIDR for the public subnet"
+  default = "11.1.1.0/24"
+}
+##
+variable "public_subnet_name" {
+  description = "Name for the public subnet"
+  default = "public-sn"
+}
+## private ip cidr
+variable "private_subnet_cidr" {
+  description = "CIDR for the private subnet"
+  default = "11.1.2.0/24"
+}
+## private subnet name 
+variable "private_subnet_name" {
+  description = "CIDR for the public subnet"
+  default = "private-sn"
+}
+## internet gateway
+##
+variable "igw_name" {
+  description = "Name of internet gateway"
+  default = "vpc-igw"
+}
+## route table
+variable "route_table_name" {
+  description = "Name of public subnet route table"
+  default = "public-sn-rt"
 }
