@@ -1,14 +1,3 @@
-#cannot use variables for bucket names and region
-#terraform {
-# backend "s3" {
-#   bucket         = "dev-lab-s3-bucket"
-#   key            = "state/terraform.tfstate"
-#   region         = "us-east-1"
-#   encrypt        = true
-#   kms_key_id     = "alias/terraform-bucket-key"
-#   dynamodb_table = "terraform-state"
-# }
-#}
 #KMS Key and Alias
 resource "aws_kms_key" "terraform-bucket-key" {
  description             = "This key is used to encrypt bucket objects"
