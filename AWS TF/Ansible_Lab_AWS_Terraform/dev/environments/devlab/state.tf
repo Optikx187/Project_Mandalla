@@ -1,8 +1,9 @@
+#cannot use variables for bucket names and region
 terraform {
  backend "s3" {
-   bucket         = var.s3_bucket_name
+   bucket         = "dev-lab-s3-bucket"
    key            = "state/terraform.tfstate"
-   region         = var.aws_region
+   region         = "us-east-1"
    encrypt        = true
    kms_key_id     = "alias/terraform-bucket-key"
    dynamodb_table = "terraform-state"
