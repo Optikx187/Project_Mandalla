@@ -6,5 +6,5 @@ variable "aws_region" {
 variable "s3_name" {
   type = string
   description = "s3 bucket name for backent config"
-  default="dev-lab-s3-bucket"
+  default="dev-lab-s3-bucket-temp"
 }
