@@ -1,17 +1,26 @@
+terraform {
+ backend "s3" {
+   bucket         = var.s3_bucket_name
+   key            = "state/terraform.tfstate"
+   region         = var.aws_region
+   encrypt        = true
+   kms_key_id     = "alias/terraform-bucket-key"
+   dynamodb_table = "terraform-state"
+ }
+}
 #KMS Key and Alias
 resource "aws_kms_key" "terraform-bucket-key" {
  description             = "This key is used to encrypt bucket objects"
  deletion_window_in_days = 10
  enable_key_rotation     = true
 }
-
 resource "aws_kms_alias" "key-alias" {
  name          = "alias/terraform-bucket-key"
  target_key_id = aws_kms_key.terraform-bucket-key.key_id
 }
 #S3 Bucket
 resource "aws_s3_bucket" "terraform-state" {
- bucket = "temp_bucketname"
+ bucket = var.s3_bucket_name
  acl    = "private"
 
  versioning {
