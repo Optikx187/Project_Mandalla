@@ -3,7 +3,7 @@ variable "aws_region" {
   description = "AWS region"
   default="us-east-1"
 }
-variable "s3_bucket_name" {
+variable "s3_name" {
   type = string
   description = "s3 bucket name for backent config"
   default="dev-lab-s3-bucket"

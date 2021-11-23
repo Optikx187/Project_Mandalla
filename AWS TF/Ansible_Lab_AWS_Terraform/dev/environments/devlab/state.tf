@@ -21,7 +21,7 @@ resource "aws_kms_alias" "key-alias" {
 }
 #S3 Bucket
 resource "aws_s3_bucket" "terraform-state" {
- bucket = var.s3_bucket_name
+ bucket = var.s3_name
  acl    = "private"
 
  versioning {
