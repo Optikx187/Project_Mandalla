@@ -59,12 +59,12 @@ variable "vpc_public_subnets"{
 variable "vpc_private_subnets"{
   description = "list of private ips"
   type        = list(string)
-  default     = ["10.123.2.0/24","10.123.3.0/24"]
+  default     = ["10.123.2.0/24","10.123.3.0/24","10.123.4.0/24"]
 }
 variable "vpc_db_subnets"{
   description = "list of db ips"
   type        = list(string)
-  default     = ["10.123.4.0/24"]
+  default     = ["10.123.5.0/24","10.123.6.0/24","10.123.7.0/24"]
 }
 variable "vpc_tags" {
   description = "A map of tags to add to all resources"
