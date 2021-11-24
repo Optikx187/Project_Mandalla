@@ -6,9 +6,12 @@ terraform {
    }
  }
 }
-
+locals {
+  region = "us-east-1"
+}
+#requires aws configure and profile
 provider "aws" {
- region = "us-east-1"
- shared_credentials_file = "/home/optikx/.aws/credentials"
- profile = "default"
+ region = locals.region
+ shared_credentials_file = "/home/optikx/.aws/credentials" #change me
+ profile = "default" #change me
 }
