@@ -19,9 +19,11 @@ module "vpc" {
   single_nat_gateway = true
   enable_nat_gateway = true
 
+  enable_dns_hostnames = true
+
   tags = merge(
     {
-      "Name" = format("%s", var.vpc_name)
+      "Name" = format("%s-dev", var.customer_name)
     },
     var.tags,
     var.vpc_tags,

@@ -6,6 +6,11 @@ variable "aws_region" {
   description = "AWS region"
   default     = "us-east-1"
 }
+variable "customer_name"{
+  description = "Name for resources created by the vpc module"
+  type        = string
+  default     = "customer" #change me 
+}
 #=======================
 #backend config var
 #=======================
@@ -39,7 +44,7 @@ variable "key_path" {
 variable "vpc_name"{
   description = "Name of VPC"
   type        = string
-  default     = "dev-vpc" #change me 
+  default     = "vpc-dev" #change me 
 }
 variable "vpc_cidr" {
   description = "cidr for vpc"
@@ -65,7 +70,7 @@ variable "vpc_tags" {
   description = "A map of tags to add to all resources"
   type        = map(string)
   default     = {
-    VPC = "TRUE"
+    module = "vpc"
   }
 }
 #=======================

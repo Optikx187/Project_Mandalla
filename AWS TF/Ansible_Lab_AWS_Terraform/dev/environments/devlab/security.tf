@@ -7,12 +7,17 @@ resource "tls_private_key" "private_key" {
 resource "aws_key_pair" "key_pair" {
   key_name   = var.key_name
   public_key = tls_private_key.private_key.public_key_openssh
-
-   depends_on = [tls_private_key.private_key]
+  depends_on = [tls_private_key.private_key]
+  tags = merge (
+    {
+      "Name" = format("%s", var.key_name)
+    },
+    var.tags,
+    var.vpc_tags,
+  )
 }
 # this resource will save the private key at our specified path.
 resource "local_file" "saveKey" {
   content = tls_private_key.private_key.private_key_pem
   filename = "${var.base_path}/${var.key_name}.pem"
-  
 }
