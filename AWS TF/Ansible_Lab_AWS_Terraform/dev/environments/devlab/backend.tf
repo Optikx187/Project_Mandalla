@@ -4,6 +4,7 @@
     #terrarofm init
     #terraform plan -out test.tfplan
     #terraform apply "test.tfplan"
+/*    
 terraform {
  backend "s3" {
    bucket         = "dev-lab-s3-bucket" #update me
@@ -14,3 +15,4 @@ terraform {
    dynamodb_table = "terraform-state"
  }
 }
+*/
