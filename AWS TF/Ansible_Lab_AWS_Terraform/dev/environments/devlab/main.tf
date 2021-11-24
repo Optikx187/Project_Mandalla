@@ -11,7 +11,7 @@ locals {
 }
 #requires aws configure and profile
 provider "aws" {
- region = locals.region
+ region = local.region
  shared_credentials_file = "/home/optikx/.aws/credentials" #change me
  profile = "default" #change me
 }
