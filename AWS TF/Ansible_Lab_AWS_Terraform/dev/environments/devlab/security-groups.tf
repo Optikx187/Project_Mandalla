@@ -61,6 +61,14 @@ module "security_group_public" {
       cidr_blocks =  local.remote_subnet_cidr
     },
     {
+      rule        = "rdp-tcp"
+      cidr_blocks =  local.private_subnet_cidr
+    },
+    {
+      rule        = "rdp-udp"
+      cidr_blocks =  local.private_subnet_cidr
+    },
+    {
       rule        = "http-80-tcp"
       cidr_blocks =  "0.0.0.0/0"
     },
