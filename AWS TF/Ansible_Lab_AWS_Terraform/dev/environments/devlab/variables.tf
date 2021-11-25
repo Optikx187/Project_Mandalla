@@ -27,10 +27,15 @@ variable "s3_name" {
 #=======================
 # Security 
 #=======================
-variable "key_name" {
+variable "key_name_ec2" {
     description = "keypair name"
     type        = string
-    default = "devenv"      # change me
+    default = "env-ec2"      # change me
+}
+variable "key_name_root" {
+    description = "root key for ssc"
+    type        = string
+    default = "env-root"      # change me
 }
 # base_path for refrencing 
 variable "base_path" {
@@ -42,6 +47,13 @@ variable "base_path" {
 variable "key_path" {
   description = "SSH Public Key path"
   default = "/home/core/.ssh/id_rsa.pub"
+}
+variable "key_tags" {
+  description = "A map of tags to add to keys"
+  type        = map(string)
+  default     = {
+    module = "security"
+  }
 }
 #=======================
 #vpc vars
@@ -104,6 +116,31 @@ variable "remote_public_subnets"{
   default     = ["96.238.93.77/32"] #change me 
 }
 #=======================
+#ec2 variables
+#=======================
+variable "ec2_name_windows"{
+  description = "Name of ec2 windows instance"
+  type        = string
+  default     = "windows" #change me 
+}
+variable "ec2_name_linux"{
+  description = "Name of ec2 linux instance"
+  type        = string
+  default     = "linux" #change me 
+}
+variable "ec2_name_bastion"{
+  description = "Name of ec2 windows bastion instance"
+  type        = string
+  default     = "bastion" #change me 
+}
+variable "ec2_tags" {
+  description = "A map of tags for ec2 instances"
+  type        = map(string)
+  default     = {
+    module = "ec2-multi"
+  }
+}
+#=======================
 #general tags
 #=======================
 variable "tags" {
@@ -114,5 +151,4 @@ variable "tags" {
     Environment = "dev" #change me
     Owner       = "mygroup" #change me
   }
-  
 }
