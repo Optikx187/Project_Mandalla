@@ -14,8 +14,9 @@ module "ec2_bastion_multi" {
   availability_zone      = each.value.availability_zone
   subnet_id              = each.value.subnet_id
   vpc_security_group_ids = [module.security_group_public.security_group_id]
-  
+
   associate_public_ip_address = true
+  disable_api_termination     = false # change me 
   #user_data_base64
   #user_data
   key_name           = aws_key_pair.key_pair_ec2.key_name
@@ -45,6 +46,7 @@ module "ec2_windows_multi" {
   subnet_id              = each.value.subnet_id
   vpc_security_group_ids = [module.security_group_private.security_group_id]
 
+  disable_api_termination     = false # change me
   #user_data_base64
   #user_data
   key_name           = aws_key_pair.key_pair_ec2.key_name
@@ -73,6 +75,8 @@ module "ec2_linux_multi" {
   availability_zone      = each.value.availability_zone
   subnet_id              = each.value.subnet_id
   vpc_security_group_ids = [module.security_group_private.security_group_id]
+
+  disable_api_termination     = false # change me
   #user_data_base64
   #user_data
   key_name           = aws_key_pair.key_pair_ec2.key_name
