@@ -9,7 +9,7 @@ module "ec2_bastion_multi" {
 
   name = "${var.ec2_name_bastion}-${each.key}"
 
-  ami                    = data.aws_ami.rhel.id
+  ami                    = data.aws_ami.windows-2019.id
   instance_type          = each.value.instance_type
   availability_zone      = each.value.availability_zone
   subnet_id              = each.value.subnet_id
@@ -38,7 +38,7 @@ module "ec2_windows_multi" {
 
   name = "${var.ec2_name_windows}-${each.key}"
 
-  ami                    = data.aws_ami.rhel.id
+  ami                    = data.aws_ami.windows-2019.id
   instance_type          = each.value.instance_type
   availability_zone      = each.value.availability_zone
   subnet_id              = each.value.subnet_id
@@ -67,7 +67,7 @@ module "ec2_linux_multi" {
 
   name = "${var.ec2_name_linux}-${each.key}"
 
-  ami                    = data.aws_ami.windows.id
+  ami                    = data.aws_ami.redhat-linux-8.id
   instance_type          = each.value.instance_type
   availability_zone      = each.value.availability_zone
   subnet_id              = each.value.subnet_id
