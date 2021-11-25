@@ -189,7 +189,7 @@ variable "db_username" {
   description = "Database administrator username"
   type        = string
   sensitive   = true
-  default     = "root-db-user" #change me
+  default     = "rootdbuser" #change me
 }
 #variable "db_password" {
 #  description = "Database administrator password"
