@@ -28,9 +28,9 @@ module "db" {
   # user cannot be used as it is a reserved word used by the engine"
   name                   = var.db_name
   username               = var.db_username
-  #create_random_password = true 
-  #random_password_length = 16
-  password = random_password.password.result
+  create_random_password = true 
+  random_password_length = 16
+  #password = random_password.password.result
   port                   = 5432
 
   multi_az               = true
