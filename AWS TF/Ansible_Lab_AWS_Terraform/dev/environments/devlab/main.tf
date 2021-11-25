@@ -8,6 +8,13 @@ terraform {
 }
 locals {
   region = "us-east-1"
+  # this should give you 
+  private_formatted_list = "${formatlist("SubnetId=%s", var.vpc_private_subnets)}"
+  db_formatted_list = "${formatlist("SubnetId=%s", var.vpc_db_subnets)}"
+
+  # combine the formatted list of parameter together using join
+  private_subnet_cidr = "${join(" ", local.private_formatted_list)}"
+  db_subnet_cidr = "${join(" ", local.db_formatted_list)}"
 }
 #requires aws configure and profile
 provider "aws" {
