@@ -3,7 +3,7 @@ module "security_group" {
   version = "~> 4"
 
   name        = var.private_subnet_sg
-  description = ""
+  description = "Private Subnet Traffic"
   vpc_id      = module.vpc.vpc_id 
 
   # ingress
@@ -20,7 +20,7 @@ module "security_group" {
 
     tags = merge(
     {
-      "Name" = format("rds-,%s-dev", var.customer_name)
+      "Name" = format("private-%d-${var.customer_name}", var.environment)
     },
     var.tags,
     var.sg_tags,

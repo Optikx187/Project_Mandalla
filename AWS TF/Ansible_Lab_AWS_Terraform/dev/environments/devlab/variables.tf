@@ -11,6 +11,11 @@ variable "customer_name"{
   type        = string
   default     = "customer" #change me 
 }
+variable "environment"{
+  description = "name of environment"
+  type        = string
+  default     = "dev" #change me 
+}
 #=======================
 #backend config var
 #=======================
