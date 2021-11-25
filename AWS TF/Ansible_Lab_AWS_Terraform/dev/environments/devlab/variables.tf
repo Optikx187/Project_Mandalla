@@ -74,6 +74,27 @@ variable "vpc_tags" {
   }
 }
 #=======================
+#sg vars
+#=======================
+variable "sg_tags" {
+  description = "A map of tags to add to sg's"
+  type        = map(string)
+  default     = {
+    module = "security_groups"
+  }
+}
+variable "private_subnet_sg" {
+  description = "private subnet sg name"
+  type        = string
+  default     = "private_sn_routing"
+}
+variable "public_subnet_sg" {
+  description = "public subnet sg name"
+  type        = string
+  default     = "public_sn_routing"
+}
+
+#=======================
 #general tags
 #=======================
 variable "tags" {
