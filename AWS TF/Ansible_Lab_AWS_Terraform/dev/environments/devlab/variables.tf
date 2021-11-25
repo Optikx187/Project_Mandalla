@@ -85,7 +85,7 @@ variable "sg_tags" {
   description = "A map of tags to add to sg's"
   type        = map(string)
   default     = {
-    module = "security_groups"
+    module = "security-groups"
   }
 }
 variable "private_subnet_sg" {
@@ -111,6 +111,7 @@ variable "tags" {
   type        = map(string)
   default     = {
     IaaC        = "terraform"
-    Environment = "dev"
+    Environment = "dev" #change me
+    Owner       = "mygroup" #change me
   }
 }
