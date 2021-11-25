@@ -8,7 +8,7 @@ resource "tls_private_key" "private_key_ec2" {
 }
 # this resource will create a key pair using above private key
 resource "aws_key_pair" "key_pair_ec2" {
-  key_name   = var.key_name
+  key_name   = var.key_name_ec2
   public_key = tls_private_key.private_key_ec2.public_key_openssh
   depends_on = [tls_private_key.private_key_ec2]
   tags = merge (
@@ -32,7 +32,7 @@ resource "tls_private_key" "private_key_root" {
   }
   # this resource will create a key pair using above private key
   resource "aws_key_pair" "key_pair_root" {
-    key_name   = var.key_name
+    key_name   = var.key_name_root
     public_key = tls_private_key.private_key_root.public_key_openssh
     depends_on = [tls_private_key.private_key_root]
     tags = merge (

@@ -13,7 +13,7 @@ module "ec2_bastion_multi" {
   instance_type          = each.value.instance_type
   availability_zone      = each.value.availability_zone
   subnet_id              = each.value.subnet_id
-  vpc_security_group_ids = [module.security_group.security_group_id]
+  vpc_security_group_ids = [module.security_group_public.security_group_id]
 
   #user_data_base64
   #user_data
@@ -42,7 +42,7 @@ module "ec2_windows_multi" {
   instance_type          = each.value.instance_type
   availability_zone      = each.value.availability_zone
   subnet_id              = each.value.subnet_id
-  vpc_security_group_ids = [module.security_group.security_group_id]
+  vpc_security_group_ids = [module.security_group_private.security_group_id]
 
   #user_data_base64
   #user_data
