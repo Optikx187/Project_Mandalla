@@ -191,11 +191,11 @@ variable "db_username" {
   sensitive   = true
   default     = "root-db-user" #change me
 }
-variable "db_password" {
-  description = "Database administrator password"
-  type        = string
-  sensitive   = true
-}
+#variable "db_password" {
+#  description = "Database administrator password"
+#  type        = string
+#  sensitive   = true
+#}
 variable "db_tags" {
   description = "A map of tags for ec2 instances"
   type        = map(string)
