@@ -141,6 +141,69 @@ variable "ec2_tags" {
   }
 }
 #=======================
+#rds variables
+#=======================
+variable "db_identifier" {
+  description = "Database rds identifier name"
+  type        = string
+  sensitive   = true
+  default     = "rds-db-cluster" #change me
+}
+variable "db_name" {
+  description = "Database name"
+  type        = string
+  sensitive   = true
+  default     = "db1" #change me
+}
+variable "db_engine" {
+  description = "Database engine"
+  type        = string
+  default     = "postgres" #change me
+}
+variable "db_engine_version" {
+  description = "Database engine version"
+  type        = string
+  default     = "11.10" #change me
+}
+variable "db_engine_family" {
+  description = "Database engin parameter group"
+  type        = string
+  default     = "postgres11" #change me
+}
+variable "db_engine_version" {
+  description = "Database engine version"
+  type        = string
+  default     = "11" #change me
+}
+variable "db_engine_storage" {
+  description = "Database engine storage gigs"
+  type        = string
+  default     = "50" #change me
+}
+variable "db_engine_max_storage" {
+  description = "Database max storage"
+  type        = string
+  default     = "100" #change me
+}
+variable "db_username" {
+  description = "Database administrator username"
+  type        = string
+  sensitive   = true
+  default     = "root-db-user" #change me
+}
+variable "db_password" {
+  description = "Database administrator password"
+  type        = string
+  sensitive   = true
+}
+variable "db_tags" {
+  description = "A map of tags for ec2 instances"
+  type        = map(string)
+  default     = {
+    module = "rds"
+  }
+}
+#=======================
 #general tags
 #=======================
 variable "tags" {
