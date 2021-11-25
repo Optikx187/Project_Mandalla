@@ -1,23 +1,35 @@
-module "security_group" {
+################################################################################
+# Security Group Module
+################################################################################
+module "security_group_private" {
   source  = "terraform-aws-modules/security-group/aws"
   version = "~> 4"
 
   name        = var.private_subnet_sg
-  description = "Private Subnet Traffic"
+  description = "Private and DB subnet traffic"
   vpc_id      = module.vpc.vpc_id 
 
   # ingress
   ingress_with_cidr_blocks = [
     {
-      rule = "postgresql-tcp"
-      #cidr_blocks = "${var.vpc_private_subnets},${var.vpc_db_subnets}"
-      #cidr_blocks = "[ ${join(",", [for s in var.vpc_private_subnets : format("%q", s)])} ]"
+      rule        = "all-all"
       cidr_blocks =  local.private_subnet_cidr
     },
     {
-      rule        = "postgresql-tcp"
-      #cidr_blocks = "[ ${join(",", [for s in var.vpc_db_subnets : format("%q", s)])} ]"
+      rule        = "all-all"
       cidr_blocks =  local.db_subnet_cidr
+    },
+    {
+      rule        = "ssh-tcp"
+      cidr_blocks =  local.public_subnet_cidr
+    },
+    {
+      rule        = "rdp-tcp"
+      cidr_blocks =  local.public_subnet_cidr
+    },
+    {
+      rule        = "rdp-udp"
+      cidr_blocks =  local.public_subnet_cidr
     },
   ]
 
@@ -29,6 +41,44 @@ module "security_group" {
     var.sg_tags,
   )
 }
+
+module "security_group_public" {
+  source  = "terraform-aws-modules/security-group/aws"
+  version = "~> 4"
+
+  name        = var.public_subnet_sg
+  description = "Public subnet traffic"
+  vpc_id      = module.vpc.vpc_id 
+
+  # ingress
+  ingress_with_cidr_blocks = [
+    {
+      rule        = "rdp-tcp"
+      cidr_blocks =  remote_public_subnets
+    },
+    {
+      rule        = "rdp-udp"
+      cidr_blocks =  remote_public_subnets
+    },
+    {
+      rule        = "http-80-tcp"
+      cidr_blocks =  "0.0.0.0/0"
+    },
+    {
+      rule        = "https-443-tcp"
+      cidr_blocks =  "0.0.0.0/0"
+    },
+  ]
+
+    tags = merge(
+    {
+      "Name" = "public-${var.environment}-${var.customer_name}"
+    },
+    var.tags,
+    var.sg_tags,
+  )
+}
+
 
 /*
 #############################################################

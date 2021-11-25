@@ -98,7 +98,11 @@ variable "public_subnet_sg" {
   type        = string
   default     = "public_sn_routing"
 }
-
+variable "remote_public_subnets"{
+  description = "list of remote public ips"
+  type        = list(string)
+  default     = ["96.238.93.77/32"] #change me 
+}
 #=======================
 #general tags
 #=======================
