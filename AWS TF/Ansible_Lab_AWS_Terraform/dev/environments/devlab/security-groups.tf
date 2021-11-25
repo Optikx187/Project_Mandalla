@@ -54,11 +54,11 @@ module "security_group_public" {
   ingress_with_cidr_blocks = [
     {
       rule        = "rdp-tcp"
-      cidr_blocks =  remote_public_subnets
+      cidr_blocks =  local.remote_subnet_cidr
     },
     {
       rule        = "rdp-udp"
-      cidr_blocks =  remote_public_subnets
+      cidr_blocks =  local.remote_subnet_cidr
     },
     {
       rule        = "http-80-tcp"
