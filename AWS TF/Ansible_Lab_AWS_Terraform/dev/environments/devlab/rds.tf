@@ -16,7 +16,7 @@ module "db" {
   engine               = var.db_engine
   engine_version       = var.db_engine_version
   family               = var.db_engine_family # DB parameter group
-  major_engine_version = var.db_engine_version# DB option group
+  major_engine_version = var.db_engine_major_version# DB option group
   instance_class       = "db.t3.large"
   
   allocated_storage     = var.db_engine_storage #change me

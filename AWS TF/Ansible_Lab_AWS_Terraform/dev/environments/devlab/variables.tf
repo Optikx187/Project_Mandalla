@@ -170,8 +170,8 @@ variable "db_engine_family" {
   type        = string
   default     = "postgres11" #change me
 }
-variable "db_engine_version" {
-  description = "Database engine version"
+variable "db_engine_major_version" {
+  description = "Database engine major version"
   type        = string
   default     = "11" #change me
 }
