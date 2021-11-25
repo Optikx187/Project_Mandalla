@@ -23,7 +23,7 @@ module "vpc" {
 
   tags = merge(
     {
-      "Name" = format("%d-${var.customer_name}", var.environment)
+      "Name" = "${var.environment}-${var.customer_name}"
       #"Name" = format("%s-dev", var.customer_name)
     },
     var.tags,

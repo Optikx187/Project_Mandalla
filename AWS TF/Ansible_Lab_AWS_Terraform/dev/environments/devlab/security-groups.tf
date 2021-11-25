@@ -10,17 +10,18 @@ module "security_group" {
   ingress_with_cidr_blocks = [
     {
       rule = "postgresql-tcp"
-      cidr_blocks = "${var.vpc_private_subnets},${var.vpc_db_subnets}"
+      #cidr_blocks = "${var.vpc_private_subnets},${var.vpc_db_subnets}"
+      cidr_blocks = "[ ${join(",", [for s in var.vpc_private_subnets : format("%q", s)])} ]"
     },
     {
       rule        = "postgresql-tcp"
-      cidr_blocks = "30.30.30.30/32"
+      cidr_blocks = "[ ${join(",", [for s in var.vpc_db_subnets : format("%q", s)])} ]"
     },
   ]
 
     tags = merge(
     {
-      "Name" = format("private-%d-${var.customer_name}", var.environment)
+      "Name" = "private-${var.environment}-${var.customer_name}"
     },
     var.tags,
     var.sg_tags,
