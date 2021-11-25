@@ -2,7 +2,7 @@
 # EC2 Module
 ################################################################################
 #Bastion
-module "ec2_windows_multi" {
+module "ec2_bastion_multi" {
   source  = "terraform-aws-modules/ec2-instance/aws"
   version = "3.3.0"
   for_each = local.multiple_bastion_instances
