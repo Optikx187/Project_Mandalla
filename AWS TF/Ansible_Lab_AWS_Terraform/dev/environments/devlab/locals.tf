@@ -23,7 +23,7 @@ locals {
     one = {
       instance_type     = "t3.micro"
       availability_zone = element(module.vpc.azs, 0)
-      subnet_id         = element(module.vpc.private_subnets, 0)
+      subnet_id         = element(module.vpc.public_subnets, 0)
       root_block_device = [
         {
           encrypted   = true
