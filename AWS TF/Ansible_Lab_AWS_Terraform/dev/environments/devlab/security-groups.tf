@@ -1,3 +1,13 @@
+locals {
+   # this should give you 
+   private_formatted_list = "${formatlist("SubnetId=%s, var.vpc_private_subnets")}"
+   db_formatted_list = "${formatlist("SubnetId=%s, var.vpc_db_subnets")}"
+
+   # combine the formatted list of parameter together using join
+   private_subnet_cidr = "${join(" ", locals.private_formatted_list)}"
+   db_subnet_cidr = "${join(" ", locals.db_formatted_list)}"
+}
+
 module "security_group" {
   source  = "terraform-aws-modules/security-group/aws"
   version = "~> 4"
@@ -11,11 +21,13 @@ module "security_group" {
     {
       rule = "postgresql-tcp"
       #cidr_blocks = "${var.vpc_private_subnets},${var.vpc_db_subnets}"
-      cidr_blocks = "[ ${join(",", [for s in var.vpc_private_subnets : format("%q", s)])} ]"
+      #cidr_blocks = "[ ${join(",", [for s in var.vpc_private_subnets : format("%q", s)])} ]"
+      cidr_blocks =  local.private_subnet_cidr
     },
     {
       rule        = "postgresql-tcp"
-      cidr_blocks = "[ ${join(",", [for s in var.vpc_db_subnets : format("%q", s)])} ]"
+      #cidr_blocks = "[ ${join(",", [for s in var.vpc_db_subnets : format("%q", s)])} ]"
+      cidr_blocks =  local.db_subnet_cidr
     },
   ]
 
