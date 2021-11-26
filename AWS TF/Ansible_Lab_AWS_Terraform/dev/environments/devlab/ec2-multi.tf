@@ -46,8 +46,9 @@ module "ec2_windows_multi" {
   subnet_id              = each.value.subnet_id
   vpc_security_group_ids = [module.security_group_private.security_group_id]
 
-  disable_api_termination     = false # change me
+  disable_api_termination= false # change me
   #user_data_base64
+  iam_instance_profile    = aws_iam_instance_profile.ec2_profile.id
   user_data = templatefile("./dependencies/win_boot.ps1.tpl", {uname = var.ec2_username, key = "ec2-${var.environment}-${var.customer_name}"})
   #user_data = templatefile("./dependencies/win_boot.ps1.tpl", {uname = var.ec2_username, pass = random_password.ec2_pw.result})
   key_name           = aws_key_pair.key_pair_ec2.key_name

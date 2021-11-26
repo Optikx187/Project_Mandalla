@@ -6,6 +6,10 @@ variable "aws_region" {
   description = "AWS region"
   default     = "us-east-1"
 }
+variable "aws_account" {
+  type        = string
+  description = "AWS account"
+}
 variable "customer_name"{
   description = "Name for resources created by the vpc module"
   type        = string

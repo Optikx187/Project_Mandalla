@@ -4,7 +4,7 @@ resource "aws_kms_key" "s3_key" {
  enable_key_rotation     = true
 }
 
-module "s3-bucket" {
+module "s3_bucket" {
   source  = "terraform-aws-modules/s3-bucket/aws"
   version = "2.11.1"
   # insert the 5 required variables here
