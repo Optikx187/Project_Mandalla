@@ -129,9 +129,5 @@ locals {
       ]
     }
   }
-  #############################
-  # Secrets Manager
-  #############################
-  ec2_password = random_password.ec2_pw.result
 }
 

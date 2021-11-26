@@ -48,7 +48,8 @@ module "ec2_windows_multi" {
 
   disable_api_termination     = false # change me
   #user_data_base64
-  user_data = templatefile("./dependencies/win_boot.ps1.tpl", {uname = var.ec2_username, pass = random_password.ec2_pw.result})
+  user_data = templatefile("./dependencies/win_boot.ps1.tpl", {uname = var.ec2_username, key = "ec2-${var.environment}-${var.customer_name}"})
+  #user_data = templatefile("./dependencies/win_boot.ps1.tpl", {uname = var.ec2_username, pass = random_password.ec2_pw.result})
   key_name           = aws_key_pair.key_pair_ec2.key_name
   enable_volume_tags = false
   root_block_device  = lookup(each.value, "root_block_device", [])

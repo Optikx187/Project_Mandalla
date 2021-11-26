@@ -16,6 +16,12 @@ output "linux_ip" {
     description = "public ip of bastion host"
 }
 ################################################################################
+#db 
+output "db_instance_endpoint" {
+  description = "The connection endpoint"
+  value       = module.db.db_instance_endpoint
+}
+################################################################################
 /*
 output "ec2_secrets_manager" {
   value = jsondecode(aws_secretsmanager_secret_version.ec2_secret.secret_string)["password"]

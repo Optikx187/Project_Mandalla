@@ -116,6 +116,21 @@ variable "remote_public_subnets"{
   default     = ["96.238.93.77/32"] #change me 
 }
 #=======================
+#s3 variables
+#=======================
+variable "s3_bucket_name" {
+  description = "name of s3 bucket"
+  type        = string
+  default     = "media"
+}
+variable "s3_tags" {
+  description = "A map of tags for ec2 instances"
+  type        = map(string)
+  default     = {
+    module = "s3"
+  }
+}
+#=======================
 #ec2 variables
 #=======================
 variable "ec2_name_windows"{
