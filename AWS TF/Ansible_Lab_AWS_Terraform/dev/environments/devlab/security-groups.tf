@@ -145,6 +145,13 @@ module "security_group_public" {
       description = "https traffic to internet"
       cidr_blocks = "0.0.0.0/0"
     },
+        {
+      from_port   = 5432
+      to_port     = 5432
+      protocol    = "tcp"
+      description = "postgreSQL traffic"
+      cidr_blocks = local.db_subnet_cidr
+    },
     {
       rule        = "all-all"
       cidr_blocks = local.private_subnet_cidr
