@@ -24,7 +24,7 @@ resource "local_file" "saveKey_ec2" {
   content = tls_private_key.private_key_ec2.private_key_pem
   filename = "${var.base_path}/${var.key_name_ec2}.pem"
 }
-
+#rds key 
 #root key
 resource "tls_private_key" "private_key_root" {
     algorithm = "RSA"
