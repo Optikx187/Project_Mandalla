@@ -1,7 +1,6 @@
 ################################################################################
 # RDS Module
 ################################################################################
-/*
 module "db" {
   source  = "terraform-aws-modules/rds/aws"
   version = "3.4.1"
@@ -24,9 +23,7 @@ module "db" {
   # user cannot be used as it is a reserved word used by the engine"
   name                   = var.db_name
   username               = var.db_username
-  create_random_password = true 
-  random_password_length = 16
-  #password = random_password.password.result
+  password = random_password.rds_pw.result
   port                   = 5432
 
   multi_az               = true
@@ -68,4 +65,3 @@ module "db" {
     var.db_tags,
   )
 }
-*/

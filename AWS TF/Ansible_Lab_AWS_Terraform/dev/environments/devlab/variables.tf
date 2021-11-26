@@ -158,12 +158,7 @@ variable "ec2_windows_role"{
 variable "ec2_username" {
   type        = string
   description = "EC2 admin account name"
-  default     = "jamil.malone"    #change me
-}
-variable "ec2_passwd" {
-  type        = string
-  description = "EC2 admin account password"
-  default     = "12qwaszx!@QWASZX"  #change me
+  default     = "svc_admin"    #change me
 }
 #=======================
 #rds variables

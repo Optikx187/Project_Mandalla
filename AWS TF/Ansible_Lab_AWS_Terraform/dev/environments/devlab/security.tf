@@ -59,7 +59,7 @@ resource "tls_private_key" "private_key_root" {
   # NOTE: Since we aren't specifying a KMS key this will default to using
   # `aws/secretsmanager`/
   resource "aws_secretsmanager_secret" "ec2" {
-    name        = var.ec2_username
+    name        = "ec2-${var.environment}-${var.customer_name}"
     tags = merge (
       var.tags,
       var.key_tags,
@@ -71,3 +71,22 @@ resource "tls_private_key" "private_key_root" {
     secret_string = jsonencode({"password": "${random_password.ec2_pw.result}"})
   }
 #rds passwords
+  resource "random_password" "rds_pw" {
+    length           = 20
+    special          = false
+  }
+
+  # NOTE: Since we aren't specifying a KMS key this will default to using
+  # `aws/secretsmanager`/
+  resource "aws_secretsmanager_secret" "rds" {
+    name        = "rds-${var.environment}-${var.customer_name}"
+    tags = merge (
+      var.tags,
+      var.key_tags,
+    )
+  }
+
+  resource "aws_secretsmanager_secret_version" "rds_secret" {
+    secret_id     = aws_secretsmanager_secret.rds.id
+    secret_string = jsonencode({"password": "${random_password.rds_pw.result}"})
+  }
