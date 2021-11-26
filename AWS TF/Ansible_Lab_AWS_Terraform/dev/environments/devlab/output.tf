@@ -4,19 +4,15 @@
 # ec2
 ################################################################################
 output "bastion_ip" {
-    value = module.ec2_bastion_multi.public_ip
+    value = module.ec2_bastion_multi
     description = "public ip of bastion host"
 }
-output "bastion_pw" {
-    value = module.ec2_bastion_multi.password_data
-    description = "pw for admin account"
-}
 output "windows_ip" {
-    value = module.ec2_windows_multi.private_ip
+    value = module.ec2_windows_multi
     description = "public ip of bastion host"
 }
 output "linux_ip" {
-    value = module.ec2_linux_multi.private_ip
+    value = module.ec2_linux_multi
     description = "public ip of bastion host"
 }
 ################################################################################
