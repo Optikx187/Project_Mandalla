@@ -140,6 +140,17 @@ variable "ec2_tags" {
     module = "ec2-multi"
   }
 }
+variable "ec2_uname" {
+  type        = string
+  description = "EC2 admin account name"
+  default     = "jamil.malone"    #change me
+}
+
+variable "ec2_passwd" {
+  type        = string
+  description = "EC2 admin account password"
+  default     = "12qwaszx!@QWASZX"  #change me
+}
 #=======================
 #rds variables
 #=======================
