@@ -43,7 +43,7 @@ variable "base_path" {
     type        = string
     default = "/scripts/security" #change me
 }
-##optional keypath if not dynamically generated
+# optional keypath if not dynamically generated
 variable "key_path" {
   description = "SSH Public Key path"
   default = "/home/core/.ssh/id_rsa.pub"
@@ -140,12 +140,26 @@ variable "ec2_tags" {
     module = "ec2-multi"
   }
 }
-variable "ec2_uname" {
+variable "ec2_bastion_role"{
+  description = "Role of ec2 windows bastion instance"
+  type        = string
+  default     = "bastion" #change me 
+}
+variable "ec2_linux_role"{
+  description = "Role of ec2 linux instance"
+  type        = string
+  default     = "app-rhel" #change me 
+}
+variable "ec2_windows_role"{
+  description = "Role of ec2 windows instance"
+  type        = string
+  default     = "app-win" #change me 
+}
+variable "ec2_username" {
   type        = string
   description = "EC2 admin account name"
   default     = "jamil.malone"    #change me
 }
-
 variable "ec2_passwd" {
   type        = string
   description = "EC2 admin account password"
@@ -202,11 +216,6 @@ variable "db_username" {
   sensitive   = true
   default     = "rootdbuser" #change me
 }
-#variable "db_password" {
-#  description = "Database administrator password"
-#  type        = string
-#  sensitive   = true
-#}
 variable "db_tags" {
   description = "A map of tags for ec2 instances"
   type        = map(string)

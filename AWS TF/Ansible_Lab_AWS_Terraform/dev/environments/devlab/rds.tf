@@ -1,11 +1,7 @@
 ################################################################################
 # RDS Module
 ################################################################################
-resource "random_password" "password" {
-  length           = 16
-  special          = true
-  override_special = "_%@!"
-}
+/*
 module "db" {
   source  = "terraform-aws-modules/rds/aws"
   version = "3.4.1"
@@ -72,3 +68,4 @@ module "db" {
     var.db_tags,
   )
 }
+*/

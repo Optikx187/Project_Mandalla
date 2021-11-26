@@ -48,3 +48,29 @@ resource "tls_private_key" "private_key_root" {
     content = tls_private_key.private_key_root.private_key_pem
     filename = "${var.base_path}/${var.key_name_root}.pem"
   }
+  #additional keys
+
+#ec2 passwords
+  resource "random_password" "ec2_pw" {
+    length           = 20
+    special          = false
+  }
+
+  # NOTE: Since we aren't specifying a KMS key this will default to using
+  # `aws/secretsmanager`/
+  resource "aws_secretsmanager_secret" "ec2" {
+    name        = var.ec2_username
+    tags = merge (
+      {
+        "Name" = format("%s", var.ec2_sec_man_name)
+      },
+      var.tags,
+      var.key_tags,
+    )
+  }
+
+  resource "aws_secretsmanager_secret_version" "secret_val" {
+    secret_id     = aws_secretsmanager_secret.ec2.id
+    secret_string = jsonencode({"password": "${random_password.ec2_pw.result}"})
+  }
+#rds passwords
