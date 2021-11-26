@@ -9,6 +9,7 @@ variable "aws_region" {
 variable "aws_account" {
   type        = string
   description = "AWS account"
+  default = "null"
 }
 variable "customer_name"{
   description = "Name for resources created by the vpc module"
