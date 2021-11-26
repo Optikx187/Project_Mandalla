@@ -12,6 +12,20 @@ module "security_group_private" {
   # ingress
   ingress_with_cidr_blocks = [
     {
+      from_port   = 22
+      to_port     = 22
+      protocol    = "tcp"
+      description = "ssh from public subnet"
+      cidr_blocks = local.public_subnet_cidr
+    },
+    {
+      from_port   = 3389
+      to_port     = 3389
+      protocol    = "tcp"
+      description = "rdp from public subnet"
+      cidr_blocks = local.public_subnet_cidr
+    },
+    {
       rule        = "all-all"
       cidr_blocks =  local.private_subnet_cidr
     },
@@ -19,6 +33,7 @@ module "security_group_private" {
       rule        = "all-all"
       cidr_blocks =  local.db_subnet_cidr
     },
+    /*
     {
       rule        = "ssh-tcp"
       cidr_blocks =  local.public_subnet_cidr
@@ -30,6 +45,14 @@ module "security_group_private" {
     {
       rule        = "rdp-udp"
       cidr_blocks =  local.public_subnet_cidr
+    },
+    */
+  ]
+
+  egress_with_cidr_blocks = [
+    {
+      rule        = "all-all"
+      cidr_blocks = "0.0.0.0/0"
     },
   ]
 
@@ -53,6 +76,35 @@ module "security_group_public" {
   # ingress
   ingress_with_cidr_blocks = [
     {
+      from_port   = 3389
+      to_port     = 3389
+      protocol    = "tcp"
+      description = "rdp from public subnet"
+      cidr_blocks = local.remote_subnet_cidr
+    },
+    {
+      from_port   = 3389
+      to_port     = 3389
+      protocol    = "tcp"
+      description = "rdp from public subnet"
+      cidr_blocks = local.private_subnet_cidr
+    },
+    {
+      from_port   = 80
+      to_port     = 80
+      protocol    = "tcp"
+      description = "http traffic from internet"
+      cidr_blocks = "0.0.0.0/0"
+    },
+    {
+      from_port   = 443
+      to_port     = 443
+      protocol    = "tcp"
+      description = "https traffic from internet"
+      cidr_blocks = "0.0.0.0/0"
+    },
+   /*
+    {
       rule        = "rdp-tcp"
       cidr_blocks =  local.remote_subnet_cidr
     },
@@ -67,14 +119,6 @@ module "security_group_public" {
     {
       rule        = "rdp-udp"
       cidr_blocks =  local.private_subnet_cidr
-    },
-    {
-      rule        = "rdp-tcp"
-      cidr_blocks =  local.public_subnet_cidr
-    },
-    {
-      rule        = "rdp-udp"
-      cidr_blocks =  local.public_subnet_cidr
     },
     {
       rule        = "http-80-tcp"
@@ -84,8 +128,28 @@ module "security_group_public" {
       rule        = "https-443-tcp"
       cidr_blocks =  "0.0.0.0/0"
     },
+    */
   ]
-
+  egress_with_cidr_blocks = [
+    {
+      from_port   = 80
+      to_port     = 80
+      protocol    = "tcp"
+      description = "http traffic to internet"
+      cidr_blocks = "0.0.0.0/0"
+    },
+    {
+      from_port   = 443
+      to_port     = 443
+      protocol    = "tcp"
+      description = "https traffic to internet"
+      cidr_blocks = "0.0.0.0/0"
+    },
+    {
+      rule        = "all-all"
+      cidr_blocks = local.private_subnet_cidr
+    },
+  ]
     tags = merge(
     {
       "Name" = "public-${var.environment}-${var.customer_name}"
