@@ -26,7 +26,7 @@ module "ec2_bastion_multi" {
   tags = merge(
     {
       "Name" = "${var.ec2_name_bastion}-${var.environment}-${var.customer_name}"
-      "Role" = "bastion" #change me
+      "Role" = "${var.ec2_bastion_role}" 
     },
     var.tags,
     var.ec2_tags
@@ -48,7 +48,7 @@ module "ec2_windows_multi" {
 
   disable_api_termination     = false # change me
   #user_data_base64
-  user_data = templatefile("./dependencies/win_boot.ps1.tpl", {uname = var.ec2_uname, pass = var.ec2_passwd})
+  user_data = templatefile("./dependencies/win_boot.ps1.tpl", {uname = var.ec2_username, pass = random_password.ec2_pw.result})
   key_name           = aws_key_pair.key_pair_ec2.key_name
   enable_volume_tags = false
   root_block_device  = lookup(each.value, "root_block_device", [])
@@ -56,7 +56,7 @@ module "ec2_windows_multi" {
   tags = merge(
     {
       "Name" = "${var.ec2_name_windows}-${var.environment}-${var.customer_name}"
-      "Role" = "app-windows" #change me 
+      "Role" = "${var.ec2_windows_role}" 
     },
     var.tags,
     var.ec2_tags,
@@ -78,7 +78,7 @@ module "ec2_linux_multi" {
 
   disable_api_termination     = false # change me
   #user_data_base64
-  #user_data
+user_data = templatefile("./dependencies/_boot.sh.tpl", {uname = var.ec2_username, pass = var.ec2_passwd})
   key_name           = aws_key_pair.key_pair_ec2.key_name
   enable_volume_tags = false
   root_block_device  = lookup(each.value, "root_block_device", [])
@@ -86,7 +86,7 @@ module "ec2_linux_multi" {
   tags = merge(
     {
       "Name" ="${var.ec2_name_linux}-${var.environment}-${var.customer_name}"
-      "Role" = "enterprise-rhel" #change me 
+      "Role" = "${var.ec2_linux_role}" 
     },
     var.tags,
     var.ec2_tags,
