@@ -78,7 +78,7 @@ module "ec2_linux_multi" {
 
   disable_api_termination     = false # change me
   #user_data_base64
-user_data = templatefile("./dependencies/_boot.sh.tpl", {uname = var.ec2_username, pass = var.ec2_passwd})
+user_data = templatefile("./dependencies/rhel_boot.sh.tpl", {uname = var.ec2_username, pass = var.ec2_passwd})
   key_name           = aws_key_pair.key_pair_ec2.key_name
   enable_volume_tags = false
   root_block_device  = lookup(each.value, "root_block_device", [])

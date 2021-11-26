@@ -61,15 +61,12 @@ resource "tls_private_key" "private_key_root" {
   resource "aws_secretsmanager_secret" "ec2" {
     name        = var.ec2_username
     tags = merge (
-      {
-        "Name" = format("%s", var.ec2_sec_man_name)
-      },
       var.tags,
       var.key_tags,
     )
   }
 
-  resource "aws_secretsmanager_secret_version" "secret_val" {
+  resource "aws_secretsmanager_secret_version" "ec2_secret" {
     secret_id     = aws_secretsmanager_secret.ec2.id
     secret_string = jsonencode({"password": "${random_password.ec2_pw.result}"})
   }
