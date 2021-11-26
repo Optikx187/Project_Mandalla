@@ -60,6 +60,7 @@ resource "tls_private_key" "private_key_root" {
   # `aws/secretsmanager`/
   resource "aws_secretsmanager_secret" "ec2" {
     name        = "ec2-${var.environment}-${var.customer_name}"
+    recovery_window_in_days = 0
     tags = merge (
       var.tags,
       var.key_tags,
@@ -80,6 +81,7 @@ resource "tls_private_key" "private_key_root" {
   # `aws/secretsmanager`/
   resource "aws_secretsmanager_secret" "rds" {
     name        = "rds-${var.environment}-${var.customer_name}"
+    recovery_window_in_days = 0
     tags = merge (
       var.tags,
       var.key_tags,
