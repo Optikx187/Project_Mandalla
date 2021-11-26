@@ -7,5 +7,5 @@
 
 output "ec2_secrets_manager" {
   value = jsondecode(aws_secretsmanager_secret_version.ec2_secret.secret_string)["password"]
-  sensative = true
+  sensitive = true
 }
