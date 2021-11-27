@@ -59,7 +59,7 @@ resource "tls_private_key" "private_key_root" {
   # NOTE: Since we aren't specifying a KMS key this will default to using
   # `aws/secretsmanager`/
   resource "aws_secretsmanager_secret" "ec2" {
-    name        = "ec2-${var.environment}-${var.customer_name}"
+    name        = "ec2-${var.environment}-${var.customer_name}-1"
     recovery_window_in_days = 0
     tags = merge (
       var.tags,
@@ -80,7 +80,7 @@ resource "tls_private_key" "private_key_root" {
   # NOTE: Since we aren't specifying a KMS key this will default to using
   # `aws/secretsmanager`/
   resource "aws_secretsmanager_secret" "rds" {
-    name        = "rds-${var.environment}-${var.customer_name}"
+    name        = "rds-${var.environment}-${var.customer_name}-1"
     recovery_window_in_days = 0
     tags = merge (
       var.tags,
