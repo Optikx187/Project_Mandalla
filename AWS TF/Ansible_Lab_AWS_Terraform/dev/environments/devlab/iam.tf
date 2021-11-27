@@ -6,8 +6,8 @@ data "aws_iam_policy_document" "ec2_policydocument" {
   }
   statement {
     actions   = ["s3:*"]
-    resources = [module.s3_bucket.s3_bucket_arn]
-    effect = "Allow"
+    resources = [module.s3_bucket.s3_bucket_arn] #check outputs
+    effect    = "Allow"
   }
 }
 
@@ -44,7 +44,7 @@ resource "aws_iam_instance_profile" "ec2_profile" {
 
 
 
-resource "aws_iam_policy_attachment" "instance_attach_Secret_manager" {
+resource "aws_iam_policy_attachment" "ec2_attach" {
   name       = "ec2-attach-${var.environment}-${var.customer_name}"
   roles      = [aws_iam_role.ec2_role.name]
   policy_arn = aws_iam_policy.secretpolicy.arn
