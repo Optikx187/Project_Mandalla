@@ -2,7 +2,7 @@
 /*
 Pre-reqs
   AWS Console account with cli access
-  AWS CLI with profile configured and entered pelow
+  AWS CLI with profile configured and entered below
   Terraform V1.0.11(.terraform-version)
 */
 ################################################

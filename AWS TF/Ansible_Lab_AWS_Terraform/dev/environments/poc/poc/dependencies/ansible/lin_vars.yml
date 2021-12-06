@@ -1,0 +1,9 @@
+---
+
+ssm_s3_bucket: tools-dev-customer
+ssm_region: us-east-1
+testfile: test_ansible_file.bam
+
+hostnames: 
+  primary: "{{ lookup('env', '1NAME') }}"
+  secondary:  "{{ lookup('env', '2NAME') }}"

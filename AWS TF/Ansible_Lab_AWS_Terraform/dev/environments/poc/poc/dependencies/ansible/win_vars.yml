@@ -1,0 +1,8 @@
+---
+
+ssm_s3_bucket: tools-dev-customer
+testdir: test_ssm_dir
+
+hostnames: 
+  primary: "{{ lookup('env', '1NAME') }}"
+  secondary:  "{{ lookup('env', '2NAME') }}"

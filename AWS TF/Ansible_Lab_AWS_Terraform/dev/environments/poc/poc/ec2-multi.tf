@@ -18,15 +18,15 @@ module "ec2_bastion_multi" {
   associate_public_ip_address = true
   disable_api_termination     = false # change me 
   get_password_data           = true
-  #user_data
+  user_data = templatefile("./dependencies/templates/win_bastion_boot.ps1.tpl", {uname = var.bastion_username, pass = random_password.bastion_pw.result})
   key_name           = aws_key_pair.key_pair_ec2.key_name
   enable_volume_tags = false
   root_block_device  = lookup(each.value, "root_block_device", [])
 
   tags = merge(
     {
-      "Name" = "${var.ec2_name_bastion}-${var.environment}-${var.customer_name}"
-      "Role" = "${var.ec2_bastion_role}" 
+      "Name"      = "${var.ec2_name_bastion}-${var.environment}-${var.customer_name}"
+      "Role"      = "${var.ec2_bastion_role}" 
     },
     var.tags,
     var.ec2_tags
@@ -47,18 +47,18 @@ module "ec2_windows_multi" {
   vpc_security_group_ids = [module.security_group_private.security_group_id]
 
   disable_api_termination= false # change me
-  #user_data_base64
   iam_instance_profile    = aws_iam_instance_profile.ec2_profile.id
-  user_data = templatefile("./dependencies/win_boot.ps1.tpl", {uname = var.ec2_username, key = "ec2-${var.environment}-${var.customer_name}"})
-  #user_data = templatefile("./dependencies/win_boot.ps1.tpl", {uname = var.ec2_username, pass = random_password.ec2_pw.result})
+  user_data = templatefile("./dependencies/templates/win_boot.ps1.tpl", {uname = var.ec2_username, sm_key = local.sm_key}) #must match security.tf value
+  #user_data = templatefile("./dependencies/templates/win_boot.ps1.tpl", {uname = var.ec2_username, pass = random_password.ec2_pw.result})
   key_name           = aws_key_pair.key_pair_ec2.key_name
   enable_volume_tags = false
   root_block_device  = lookup(each.value, "root_block_device", [])
 
   tags = merge(
     {
-      "Name" = "${var.ec2_name_windows}-${var.environment}-${var.customer_name}"
-      "Role" = "${var.ec2_windows_role}" 
+      "Name"            = "${var.ec2_name_windows}-${var.environment}-${var.customer_name}"
+      "Role"            = "${var.ec2_windows_role}" 
+      "${var.ssm_boot}" = "${var.win_configure_service_1}"
     },
     var.tags,
     var.ec2_tags,
@@ -79,16 +79,17 @@ module "ec2_linux_multi" {
   vpc_security_group_ids = [module.security_group_private.security_group_id]
 
   disable_api_termination     = false # change me
-  #user_data_base64
-user_data = templatefile("./dependencies/rhel_boot.sh.tpl", {uname = var.ec2_username, pass = random_password.ec2_pw.result})
+  iam_instance_profile    = aws_iam_instance_profile.ec2_profile.id
+  user_data = templatefile("./dependencies/templates/rhel_boot.sh.tpl", {uname = var.ec2_username, pass = random_password.ec2_pw.result, region = var.aws_region })
   key_name           = aws_key_pair.key_pair_ec2.key_name
   enable_volume_tags = false
   root_block_device  = lookup(each.value, "root_block_device", [])
 
   tags = merge(
     {
-      "Name" ="${var.ec2_name_linux}-${var.environment}-${var.customer_name}"
-      "Role" = "${var.ec2_linux_role}" 
+      "Name"            = "${var.ec2_name_linux}-${var.environment}-${var.customer_name}"
+      "Role"            = "${var.ec2_linux_role}" 
+      "${var.ssm_boot}" = "${var.lin_configure_service_1}"
     },
     var.tags,
     var.ec2_tags,

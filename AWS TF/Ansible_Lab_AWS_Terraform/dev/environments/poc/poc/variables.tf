@@ -4,7 +4,7 @@
 variable "aws_region" {
   type        = string
   description = "AWS region"
-  default     = "us-east-1"
+  default     = "us-east-1" #change me
 }
 variable "aws_account" {
   type        = string
@@ -24,10 +24,10 @@ variable "environment"{
 #=======================
 #backend config var
 #=======================
-variable "s3_name" {
+variable "s3_backend_name" {
   type = string
   description = "s3 bucket name for backent config"
-  default     = "dev-lab-s3-bucket-temp"
+  default     = "dev-lab-s3-bucket-321" #change me must match ../init/variables.tf > var s3_backend_name
 }
 #=======================
 # Security 
@@ -51,7 +51,7 @@ variable "base_path" {
 # optional keypath if not dynamically generated
 variable "key_path" {
   description = "SSH Public Key path"
-  default = "/home/core/.ssh/id_rsa.pub"
+  default = "/home/core/.ssh/id_rsa.pub" #flagged for removal
 }
 variable "key_tags" {
   description = "A map of tags to add to keys"
@@ -71,28 +71,28 @@ variable "vpc_name"{
 variable "vpc_cidr" {
   description = "cidr for vpc"
   type        = string
-  default     = "10.123.0.0/16"
+  default     = "10.123.0.0/16" #change me
 }
 variable "vpc_public_subnets"{
   description = "list of public ips"
   type        = list(string)
-  default     = ["10.123.1.0/24"]
+  default     = ["10.123.1.0/24"] #change me
 }
 variable "vpc_private_subnets"{
   description = "list of private ips"
   type        = list(string)
-  default     = ["10.123.2.0/24","10.123.3.0/24","10.123.4.0/24"]
+  default     = ["10.123.2.0/24","10.123.3.0/24","10.123.4.0/24"] #change me
 }
 variable "vpc_db_subnets"{
   description = "list of db ips"
   type        = list(string)
-  default     = ["10.123.5.0/24","10.123.6.0/24","10.123.7.0/24"]
+  default     = ["10.123.5.0/24","10.123.6.0/24","10.123.7.0/24"] #change me
 }
 variable "vpc_tags" {
-  description = "A map of tags to add to all resources"
+  description = "A map of tags to add to all vpcs"
   type        = map(string)
   default     = {
-    module = "vpc"
+    module = "vpc" #update me
   }
 }
 #=======================
@@ -102,38 +102,44 @@ variable "sg_tags" {
   description = "A map of tags to add to sg's"
   type        = map(string)
   default     = {
-    module = "security-groups"
+    module = "security-groups" #update me 
   }
 }
 variable "private_subnet_sg" {
   description = "private subnet sg name"
   type        = string
-  default     = "private_sn_routing"
+  default     = "private_sn_routing" 
 }
 variable "public_subnet_sg" {
   description = "public subnet sg name"
   type        = string
   default     = "public_sn_routing"
 }
+#Add more sg's for granulatiry
 variable "remote_public_subnets"{
   description = "list of remote public ips"
   type        = list(string)
-  default     = ["96.238.93.77/32"] #change me 
+  default     = ["96.238.93.77/32","64.79.144.10/32"] #change me 
 }
 #=======================
 #s3 variables
 #=======================
-variable "s3_bucket_name" {
-  description = "name of s3 bucket"
+variable "s3_bucket_media" {
+  description = "name of s3 bucket for storing media"
   type        = string
-  default     = "media"
+  default     = "media" #change me
 }
 variable "s3_tags" {
   description = "A map of tags for ec2 instances"
   type        = map(string)
   default     = {
-    module = "s3"
+    module = "s3" #update if needed
   }
+}
+variable "s3_bucket_tools" {
+  description = "name of s3 bucket for tools"
+  type        = string
+  default     = "tools" #change me
 }
 #=======================
 #ec2 variables
@@ -157,7 +163,7 @@ variable "ec2_tags" {
   description = "A map of tags for ec2 instances"
   type        = map(string)
   default     = {
-    module = "ec2-multi"
+    module = "ec2-multi" #update if needed
   }
 }
 variable "ec2_bastion_role"{
@@ -179,6 +185,11 @@ variable "ec2_username" {
   type        = string
   description = "EC2 admin account name"
   default     = "svc_admin"    #change me
+}
+variable "bastion_username" {
+  type        = string
+  description = "bastion account name"
+  default     = "jb_user"    #change me
 }
 #=======================
 #rds variables
@@ -235,8 +246,36 @@ variable "db_tags" {
   description = "A map of tags for ec2 instances"
   type        = map(string)
   default     = {
-    module = "rds"
+    module = "rds" #update as needed
   }
+}
+#=======================
+#ssm tags
+#=======================
+variable "ssm_win_config_name" {
+  type        = string
+  default     = "windows_script"
+  description = "name for ssm to use for windows run commands"
+}
+variable "ssm_lin_config_name" {
+  type        = string
+  default     = "linux_script"
+  description = "name for ssm to use for linux run commands"
+}
+variable "win_configure_service_1" {
+  type        = string
+  default     = "boot_win"
+  description = "key for ssm to use for windows run commands"
+}
+variable "lin_configure_service_1" {
+  type        = string
+  default     = "boot_lin"
+  description = "key for ssm to use for linux run commands"
+}
+variable "ssm_boot" {
+  type        = string
+  default     = "ssmTarget"
+  description = "tag name for ssm boot targets"
 }
 #=======================
 #general tags
@@ -248,5 +287,6 @@ variable "tags" {
     IaaC        = "terraform"
     Environment = "dev" #change me
     Owner       = "mygroup" #change me
+    #additional = #"here"
   }
 }

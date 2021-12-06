@@ -1,0 +1,14 @@
+plugin: aws_ec2
+regions:
+    - us-east-1 #change me
+hostnames:
+    - instance-id
+    - private-ip-address
+filters:
+    tag:ssmTarget: boot_lin #change me
+    instance-state-name : running
+    
+keyed_groups:
+  - key: tags.ssmTarget
+    prefix: tag_ssmTarget_
+    separator: ""

@@ -1,0 +1,18 @@
+- name: Create a rhel dir
+  hosts: tag_ssmTarget_boot_lin # #change me
+  gather_facts: false
+  vars:
+    ansible_connection: community.aws.aws_ssm
+    #ansible_shell_type: shell
+    ansible_aws_ssm_region: "{{ lookup('env', 'AWS_DEFAULT_REGION') }}"
+    ansible_aws_ssm_bucket_name: tools-dev-customer  #change me...match s3 var in s3.tf 
+  tasks:
+    - name: Import Variables 
+      include_vars: 
+        file: ./lin_vars.yml
+        name: vardata
+
+    - name: create test file.
+      file:
+       dest: '/tmp/{{vardata.testfile}}'
+       state: touch

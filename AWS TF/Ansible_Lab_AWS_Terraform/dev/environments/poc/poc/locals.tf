@@ -2,7 +2,13 @@ locals {
   #############################
   # General
   #############################
-  region                 = "us-east-1" #change me
+  region                 = "us-east-1"
+  aws_region             = data.aws_region.current.name
+  aws_account_id         = data.aws_caller_identity.current.account_id
+  #############################
+  # access
+  #############################
+  sm_key                 = "ec2-${var.environment}-${var.customer_name}-1" #match whats in security.tf
   #############################
   # Security Groups
   #############################

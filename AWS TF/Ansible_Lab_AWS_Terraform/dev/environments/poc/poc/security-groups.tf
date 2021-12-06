@@ -36,6 +36,13 @@ module "security_group_private" {
       description = "postgreSQL traffic"
       cidr_blocks = local.db_subnet_cidr
     },
+    {
+      from_port   = 5986
+      to_port     = 5986
+      protocol    = "tcp"
+      description = "WinRM traffic"
+      cidr_blocks = local.private_subnet_cidr
+    },
     /*
     {
       rule        = "ssh-tcp"

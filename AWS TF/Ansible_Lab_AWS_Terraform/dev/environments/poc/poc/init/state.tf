@@ -1,5 +1,5 @@
 ################################################################################
-# .tfstate file config
+# .tfstate file infra config
 ################################################################################
 #cannot use variables for bucket names
 #must be commented out on first run. S3 backend not established. #chicken before egg type deal
@@ -8,10 +8,10 @@
     #terraform plan -out test.tfplan
     #terraform apply "test.tfplan"
     
-/*    
+/*
 terraform {
  backend "s3" {
-   bucket         = "dev-lab-s3-bucket" #update me
+   bucket         = "dev-lab-s3-state" #update me
    key            = "state/terraform.tfstate"
    region         = "us-east-1" #update me
    encrypt        = true
@@ -31,7 +31,7 @@ resource "aws_kms_alias" "key-alias" {
 }
 #S3 Bucket
 resource "aws_s3_bucket" "terraform-state" {
- bucket = var.s3_name
+ bucket = var.s3_backend_name
  acl    = "private"
 
  versioning {
@@ -59,7 +59,7 @@ resource "aws_s3_bucket_public_access_block" "block" {
 
 #dynamodb
 resource "aws_dynamodb_table" "terraform-state" {
- name           = "terraform-state"
+ name           = var.dynamo_db_backend_name
  read_capacity  = 20
  write_capacity = 20
  hash_key       = "LockID"

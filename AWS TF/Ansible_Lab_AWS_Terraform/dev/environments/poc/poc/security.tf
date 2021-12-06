@@ -49,8 +49,9 @@ resource "tls_private_key" "private_key_root" {
     filename = "${var.base_path}/${var.key_name_root}.pem"
   }
   #additional keys
-
-#ec2 passwords
+################################################################################
+# ec2 passwords
+################################################################################
   resource "random_password" "ec2_pw" {
     length           = 20
     special          = false
@@ -59,7 +60,7 @@ resource "tls_private_key" "private_key_root" {
   # NOTE: Since we aren't specifying a KMS key this will default to using
   # `aws/secretsmanager`/
   resource "aws_secretsmanager_secret" "ec2" {
-    name        = "ec2-${var.environment}-${var.customer_name}-1"
+    name        = "ec2-${var.environment}-${var.customer_name}-1" #make local value match
     recovery_window_in_days = 0
     tags = merge (
       var.tags,
@@ -77,8 +78,6 @@ resource "tls_private_key" "private_key_root" {
     special          = false
   }
 
-  # NOTE: Since we aren't specifying a KMS key this will default to using
-  # `aws/secretsmanager`/
   resource "aws_secretsmanager_secret" "rds" {
     name        = "rds-${var.environment}-${var.customer_name}-1"
     recovery_window_in_days = 0
@@ -92,3 +91,35 @@ resource "tls_private_key" "private_key_root" {
     secret_id     = aws_secretsmanager_secret.rds.id
     secret_string = jsonencode({"password": "${random_password.rds_pw.result}"})
   }
+#bastion passwords
+  resource "random_password" "bastion_pw" {
+    length           = 20
+    special          = false
+  }
+  resource "aws_secretsmanager_secret" "bastion" {
+    name        = "bastion-${var.environment}-${var.customer_name}-1"
+    recovery_window_in_days = 0
+    tags = merge (
+      var.tags,
+      var.key_tags,
+    )
+  }
+  resource "aws_secretsmanager_secret_version" "bastion_secret" {
+    secret_id     = aws_secretsmanager_secret.bastion.id
+    secret_string = jsonencode({"password": "${random_password.bastion_pw.result}"})
+  }
+#additional passwords
+################################################################################
+# kms keys
+################################################################################
+ resource "aws_kms_key" "s3_key" {
+  description             = "This key is used to encrypt bucket objects"
+  deletion_window_in_days = 30
+  enable_key_rotation     = true
+ }
+
+ resource "aws_kms_key" "ssm_key" { #may remove
+  description             = "This key is used to encrypt ssm things"
+  deletion_window_in_days = 30
+  enable_key_rotation     = true
+ }
