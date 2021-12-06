@@ -14,9 +14,12 @@
 ## source env
 export AWS_DEFAULT_REGION=us-east-1 #change me
 export AWS_PROFILE=default #change me 
-
+#change me match base path
 function init()
 {
+    echo 'creating local dirs'
+    mkdir ~/build_keys/ ~/build_keys/env/ ~/build_keys/env/poc/ > /dev/null
+    echo 'initializing supporting infra'
     pushd ./init > /dev/null
     #Run init terraform
     rm *.tfplan .terraform.lock.hcl terraform.tfstate.backup
@@ -32,12 +35,14 @@ function init()
 }
 function destroy_init()
 {
+    echo 'destroying supporting infra'
     pushd ./init > /dev/null
     terraform destroy -auto-approve  &&  rm -rf .terraform  &&  rm *.tfplan .terraform.lock.hcl terraform.tfstate.backup
     popd > /dev/null
 }
 function build()
 {
+    echo 'building infra'
     #run main tf
     pushd ./build > /dev/null
     rm *.tfplan .terraform.lock.hcl *.tfstate terraform.tfstate.backup
@@ -50,6 +55,7 @@ function build()
 }
 function destroy_build()
 {
+    echo 'destroying infra'
     pushd ./build > /dev/null
     terraform destroy -auto-approve && rm *.tfplan .terraform.lock.hcl *.tfstate && terraform.tfstate.backup && rm -rf .terraform  
     popd > /dev/null
@@ -59,7 +65,9 @@ function configure()
     export AWS_DEFAULT_REGION=us-east-1 #change me
     export AWS_PROFILE=default #change me 
     pushd ./ansible > /dev/null
+    echo 'confinguring windows instances'
     AWS_PROFILE=default ansible-playbook win_playbook.yml -v
+    echo 'configuring linux instances'
     AWS_PROFILE=default ansible-playbook lin_playbook.yml -v
     popd > /dev/null
 }
