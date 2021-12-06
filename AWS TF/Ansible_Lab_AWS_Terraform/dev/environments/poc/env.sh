@@ -11,7 +11,7 @@
         #sudo yum install -y session-manager-plugin.rpm
 #tf env vars will need to be configured for pipelines
 #seperate backend pipeline
-## env
+## source env
 export AWS_DEFAULT_REGION=us-east-1 #change me
 export AWS_PROFILE=default #change me 
 
@@ -25,8 +25,8 @@ function init()
     terraform plan  -input=false -out=init.tfplan
     terraform apply -input=false "init.tfplan"
     #Copy tf files to ../*
-    cp *.tfplan ../
-    cp -rp .terraform ../
+    cp *.tfplan ../build/
+    cp -rp .terraform ../build/
     #cp *.tfstate ../
     popd > /dev/null
 }
@@ -39,22 +39,26 @@ function destroy_init()
 function build()
 {
     #run main tf
+    pushd ./build > /dev/null
     rm *.tfplan .terraform.lock.hcl *.tfstate terraform.tfstate.backup
     rm -rf .terraform 
     terraform init  -input=false
     terraform plan  -input=false -out=build.tfplan
     terraform apply -input=false "build.tfplan"
     #ingest tf outputs here.. ansible functions
+    popd > /dev/null
 }
 function destroy_build()
 {
+    pushd ./build > /dev/null
     terraform destroy -auto-approve && rm *.tfplan .terraform.lock.hcl *.tfstate && terraform.tfstate.backup && rm -rf .terraform  
+    popd > /dev/null
 }
 function configure()
 {
     export AWS_DEFAULT_REGION=us-east-1 #change me
     export AWS_PROFILE=default #change me 
-    pushd ./dependencies/ansible > /dev/null
+    pushd ./ansible > /dev/null
     AWS_PROFILE=default ansible-playbook win_playbook.yml -v
     AWS_PROFILE=default ansible-playbook lin_playbook.yml -v
     popd > /dev/null
