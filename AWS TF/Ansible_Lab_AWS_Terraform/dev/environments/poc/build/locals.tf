@@ -8,7 +8,7 @@ locals {
   #############################
   # access
   #############################
-  sm_key                 = "ec2-${var.environment}-${var.customer_name}-1" #match whats in security.tf
+  sm_key                 = "ec2-${var.environment}-${var.customer_name}" #match whats in security.tf
   #############################
   # Security Groups
   #############################

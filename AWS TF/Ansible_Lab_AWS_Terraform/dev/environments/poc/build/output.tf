@@ -49,10 +49,10 @@ output "vpc_db_subnet_id" {
 ################################################################################
 # db 
 ################################################################################
-#output "db_instance_endpoint" {
-#  description = "The connection endpoint"
-#  value       = module.db.db_instance_endpoint
-#}
+output "db_instance_endpoint" {
+  description = "The connection endpoint"
+  value       = module.db.db_instance_endpoint
+}
 ################################################################################
 output "secrets_manager_policy_arn" {
     value = aws_secretsmanager_secret_version.ec2_secret.arn

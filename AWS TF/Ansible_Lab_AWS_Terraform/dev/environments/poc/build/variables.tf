@@ -46,7 +46,7 @@ variable "key_name_root" {
 variable "base_path" {
     description = "keypair file path"
     type        = string
-    default = "~/build_keys/env/poc/" #change me
+    default = "./build_keys/env/poc/" #change me
 }
 # optional keypath if not dynamically generated
 variable "key_path" {

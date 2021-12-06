@@ -26,6 +26,9 @@ data "aws_iam_policy_document" "ec2_policydocument" {
     effect    = "Allow"
   }
 }
+data "aws_iam_policy" "managed_ssm" {
+  arn = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
+}
 ################################################################################
 # ami's
 ################################################################################

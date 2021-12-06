@@ -7,7 +7,8 @@
     #boto3
     #ssm aws cli plugin
         #https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager-working-with-install-plugin.html
-        #curl "https://s3.amazonaws.com/session-manager-downloads/plugin/latest/linux_arm64/session-manager-plugin.rpm" -o "session-manager-plugin.rpm"
+        #amd:curl "https://s3.amazonaws.com/session-manager-downloads/plugin/latest/linux_64bit/session-manager-plugin.rpm" -o "session-manager-plugin.rpm"
+        #arm:curl "https://s3.amazonaws.com/session-manager-downloads/plugin/latest/linux_arm64/session-manager-plugin.rpm" -o "session-manager-plugin.rpm"
         #sudo yum install -y session-manager-plugin.rpm
 #tf env vars will need to be configured for pipelines
 #seperate backend pipeline
@@ -18,7 +19,7 @@ export AWS_PROFILE=default #change me
 function init()
 {
     echo 'creating local dirs'
-    mkdir ~/build_keys/ ~/build_keys/env/ ~/build_keys/env/poc/ > /dev/null
+    #mkdir ./build_keys/ ./build_keys/env/ ./build_keys/env/poc/ > /dev/null
     echo 'initializing supporting infra'
     pushd ./init > /dev/null
     #Run init terraform
